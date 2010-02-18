@@ -79,15 +79,24 @@ void draw() {
     controlp5.draw();
   }
   
-  
-  tensionAcc = tensionAcc + 0.00001*(input-tension);
-  float diff = 0.01*abs(input-tension)*(tensionAcc);
-  tension = tension + diff;
-  println(diff);
+  if (abs(input-tension)>0.1){
+    int sig = 1;
+    if ((input-tension) < 0){
+      sig = -1;
+    }
+   if ((tensionAcc*sig) >= 0) {
+     tensionAcc = sig*(abs(tensionAcc) + 0.01);
+     tension  = tension + tensionAcc;
+     gain = int(tension/4)-10;
+     println (tensionAcc);
+   } else {
+     tensionAcc = 0;
+   }
+  }
   
   
   // setVolume
-  player.setGain(gain); 
+  player.setGain(gain);
   controlp5.controller(VOLUME_CONTROLLER).setValue(gain);
   controlp5.controller(TENSION_CONTROLLER).setValue(tension);
 }
