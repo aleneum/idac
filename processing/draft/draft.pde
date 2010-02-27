@@ -7,8 +7,10 @@ import ddf.minim.analysis.*;
 //sound library stuff
 Minim minim;
 AudioPlayer player;
+AudioInput in;
 BeatDetect beat;
 BeatListener bl;
+ArduinoCommunicator communicator;
 
 //gui stuff
 ControlP5 controlp5;
@@ -16,12 +18,16 @@ ControlP5 controlp5;
 //my stuff
 Visualization currentVis;
 
+PFont myFont;
+
 
 public final int INIT_GAIN = 0;
-public final String VOLUME_CONTROLLER = "Volume";
-public final String TENSION_CONTROLLER = "Tension";
-public final String INPUT_CONTROLLER = "Input";
-public final String DECAY_CONTROLLER = "Decay";
+public final String VOLUME_CONTROLLER = "Volume (dB)";
+public final String TENSION_CONTROLLER = "Tension (%)";
+public final String INPUT_CONTROLLER = "Input (%)";
+public final String DECAY_CONTROLLER = "Speed (rel)";
+public final String MIC_CONTROLLER = "Mic (rel)";
+public final String CROWD_CONTROLLER = "Noise (rel)";
 
 // size of the window to show
 public final int sizeX = 600;
@@ -29,9 +35,12 @@ public final int sizeY = 600;
 
 public int gain = INIT_GAIN;
 public float tension = 0;
-public float decay = 0.01; 
+public float crowd = 0;
+public float decay = 0.5; 
 public int input = 0;
 public boolean showGUI=true;
+
+int textColor = 0;
 
 public float tensionAcc = 0;
 
@@ -39,11 +48,13 @@ void setup() {
   //Setup GUI
   size(sizeX, sizeY,P2D);
   controlp5 = new ControlP5(this);
-  controlp5.addSlider(VOLUME_CONTROLLER,-100,100,INIT_GAIN,10,10,100,14).setId(1);
+  controlp5.addSlider(VOLUME_CONTROLLER,-50,50,INIT_GAIN,10,10,100,14).setId(1);
   controlp5.addSlider(INPUT_CONTROLLER,0,100,input,10,25,100,14).setId(2);
-  controlp5.addSlider(DECAY_CONTROLLER,0,1,input,10,40,100,14).setId(3);
+  controlp5.addSlider(DECAY_CONTROLLER,0,1,decay,10,40,100,14).setId(3);
+  controlp5.addSlider(MIC_CONTROLLER,0,1,INIT_GAIN,10,55,100,14).setId(4);
   
   controlp5.addNumberbox(TENSION_CONTROLLER, tension, width-110, 10, 100,14).setId(20);
+  controlp5.addSlider(CROWD_CONTROLLER, 0, 1, crowd, width-110, 25, 100,14).setId(21);
 
   minim = new Minim(this);
   
@@ -52,6 +63,8 @@ void setup() {
   
   // load a file, give the AudioPlayer buffers that are 2048 samples long
   player = minim.loadFile("groove.mp3", 2048);
+  in = minim.getLineIn(Minim.STEREO, 512);
+  
   beat = new BeatDetect(player.bufferSize(), player.sampleRate());
   beat.setSensitivity(300);
   bl = new BeatListener(beat, player);
@@ -61,6 +74,12 @@ void setup() {
   
   // load visualization
  currentVis = new ChessVisualization();  
+ 
+ communicator = new ArduinoCommunicator(this);
+ 
+ myFont = createFont("FFScala", 32);
+ textFont(myFont);
+ textAlign(CENTER);
 }
 
 void draw() {
@@ -85,7 +104,7 @@ void draw() {
       sig = -1;
     }
    if ((tensionAcc*sig) >= 0) {
-     tensionAcc = sig*(abs(tensionAcc) + 0.01);
+     tensionAcc = sig*(abs(tensionAcc) + decay/100);
      tension  = tension + tensionAcc;
      gain = int(tension/4)-10;
      println (tensionAcc);
@@ -94,19 +113,55 @@ void draw() {
    }
   }
   
+  input = int(communicator.getActivity() * 100);
+  
+  float inLevel = in.left.level();
+  
+  if (crowd < inLevel) {
+    crowd += 0.01; 
+  } else {
+    crowd -= 0.001;
+  }
   
   // setVolume
   player.setGain(gain);
   controlp5.controller(VOLUME_CONTROLLER).setValue(gain);
   controlp5.controller(TENSION_CONTROLLER).setValue(tension);
+  controlp5.controller(CROWD_CONTROLLER).setValue(crowd);
+  controlp5.controller(INPUT_CONTROLLER).setValue(input);
+  controlp5.controller(MIC_CONTROLLER).setValue(inLevel);
+  
+  
+  //just mess around
+  
+  fill(textColor);
+  if (textColor >= 255) {
+    textColor = 0;  
+  } else {
+    textColor+=4;
+  }
+  
+  String outText = "error";
+  
+  if (crowd < 0.2) {
+    outText = "LAME";
+  } else if (crowd < 0.4) {
+    outText = "YEAH, GOOD WORK";
+  } else if (crowd < 0.6) {
+    outText = "PARTY HARD!";
+  } else if (crowd < 0.8) {
+    outText = "IT'S ON!!";  
+  } else if (crowd < 0.9) {
+    outText = "AWESOME!!!";
+  } else {
+    outText = "O N   F I R E ! ! !";
+  }
+  
+  text(outText,width/2,height/2);
+  
+  
 }
 
-void stop() {
-  // always close Minim audio classes when you are done with them
-  player.close();
-  minim.stop();
-  super.stop();
-}
 
 
 // Event handeling below
@@ -127,8 +182,21 @@ public void controlEvent(ControlEvent theEvent) {
   }    
 }
 
+//forwarding serialEvent to communicator
+void serialEvent (Serial serial){
+  communicator.serialEvent(serial);
+}
+
 void keyPressed() {
   if (key == 'm' || key == 'M') {
     showGUI = !showGUI;
   }
+}
+
+void stop() {
+  // always close Minim audio classes when you are done with them
+  player.close();
+  in.close();
+  minim.stop();
+  super.stop();
 }
