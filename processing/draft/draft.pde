@@ -75,7 +75,7 @@ void setup() {
   // load visualization
  currentVis = new ChessVisualization();  
  
- communicator = new ArduinoCommunicator(this);
+ //communicator = new ArduinoCommunicator(this);
  
  myFont = createFont("FFScala", 32);
  textFont(myFont);
@@ -113,12 +113,12 @@ void draw() {
    }
   }
   
-  input = int(communicator.getActivity() * 100);
+  //input = int(communicator.getActivity() * 100);
   
   float inLevel = in.left.level();
   
   if (crowd < inLevel) {
-    crowd += 0.01; 
+    crowd += 0.005; 
   } else {
     crowd -= 0.001;
   }
@@ -158,7 +158,6 @@ void draw() {
   }
   
   text(outText,width/2,height/2);
-  
   
 }
 

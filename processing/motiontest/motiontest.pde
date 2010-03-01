@@ -4,9 +4,9 @@
 
 // Example 16-13: Simple motion detection
 
-import processing.video.*;
+import codeanticode.gsvideo.*;
 // Variable for capture device
-Capture video;
+GSCapture video;
 // Previous Frame
 PImage prevFrame;
 // How different must a pixel be to be a "motion" pixel
@@ -14,7 +14,7 @@ float threshold = 50;
 
 void setup() {
   size(320,240);
-  video = new Capture(this, width, height, 30);
+  video = new GSCapture(this, width, height);
   // Create an empty image the same size as the video
   prevFrame = createImage(video.width,video.height,RGB);
 }
