@@ -1,0 +1,6 @@
+<filter name="4 textures blender">
+    <description>Filter that does and additive blending of four textures</description>
+    <fragment>SimpleVS.glsl</fragment>
+    <fragment>Blend4.glsl</fragment>
+    <textures input="4" output="1"></textures>
+</filter>

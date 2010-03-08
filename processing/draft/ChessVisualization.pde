@@ -1,8 +1,8 @@
 public class ChessVisualization implements Visualization{
   
-  final int H_DIM = 4;
-  final int V_DIM = 4;
-  final float DECAY = 0.05;
+  final int H_DIM = 10;
+  final int V_DIM = 10;
+  final float DECAY = 0.03;
   
   int[][] board;
   int w,h;
@@ -34,6 +34,7 @@ public class ChessVisualization implements Visualization{
     board[col][row] = 255;
   }
   
+  // not implemented yet
   public void snare(){}
   public void hat(){}
   
@@ -41,6 +42,7 @@ public class ChessVisualization implements Visualization{
    for (int i = 0; i < H_DIM; i++) {
       for (int j = 0; j < V_DIM; j++) {
         int value = board[i][j];
+        if (value>0) value--;
         fill(value);
         rect(i*w,j*h,w,h);
         board[i][j] = value - int((DECAY*value));
