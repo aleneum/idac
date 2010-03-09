@@ -1,6 +1,6 @@
 import processing.serial.*;
 
-public class SerialCommunicator{
+public class ArduinoCommunicator{
 
 Serial port;
 float value = 0;
