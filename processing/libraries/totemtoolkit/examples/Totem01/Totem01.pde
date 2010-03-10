@@ -6,6 +6,8 @@ import totem.comm.*;
 import totem.sound.*;
 import totem.graphic.*;
 
+import fullscreen.*;  
+
 TPlayer player;
 TSerialCommunicator communicator;
 
@@ -15,6 +17,9 @@ ControlP5 controlp5;
 //my stuff
 TVisualization currentVis;
 TSimpleText simpleText;
+
+// Fullscreen support
+FullScreen fs;
 
 PFont myFont;
 
@@ -64,6 +69,9 @@ void setup() {
   myFont = createFont("FFScala", 32);
   textFont(myFont);
   textAlign(CENTER);
+  
+  
+  fs = new FullScreen(this); 
 }
 
 void draw() {

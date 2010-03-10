@@ -4,12 +4,14 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class TMotionDetection {
-
-	int threshold;
 	
+	int threshold;
 	public TMotionDetection() {
 		threshold = 50;
-		
+	}
+	
+	public void setThreshold(int value){
+		this.threshold = value;		
 	}
 	
 	public int[] detectMotion(PApplet parent, PImage prev, PImage next) {
@@ -49,8 +51,6 @@ public class TMotionDetection {
 				}
 			}
 		}
-		
-		PApplet.println(change);
 		return returnImage.pixels;
 	}
 }
