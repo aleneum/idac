@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="lib" path="/home/flex/coding/processing-1.0.9/libraries/minim/library/jl1.0.jar"/>
+	<classpathentry kind="lib" path="/home/flex/coding/processing-1.0.9/libraries/minim/library/jsminim.jar"/>
+	<classpathentry kind="lib" path="/home/flex/coding/processing-1.0.9/libraries/minim/library/minim.jar"/>
+	<classpathentry kind="lib" path="/home/flex/coding/processing-1.0.9/libraries/minim/library/minim-spi.jar"/>
+	<classpathentry kind="lib" path="/home/flex/coding/processing-1.0.9/libraries/minim/library/mp3spi1.9.4.jar"/>
+	<classpathentry kind="lib" path="/home/flex/coding/processing-1.0.9/libraries/minim/library/tritonus_aos.jar"/>
+	<classpathentry kind="lib" path="/home/flex/coding/processing-1.0.9/libraries/minim/library/tritonus_share.jar"/>
+	<classpathentry kind="lib" path="/home/flex/coding/processing-1.0.9/libraries/serial/library/RXTXcomm.jar"/>
+	<classpathentry kind="lib" path="/home/flex/coding/processing-1.0.9/libraries/serial/library/serial.jar"/>
+	<classpathentry kind="lib" path="/home/flex/coding/idac/processing/libraries/arduino/library/arduino.jar"/>
+	<classpathentry kind="lib" path="/home/flex/coding/idac/processing/libraries/controlP5/library/controlP5.jar"/>
+	<classpathentry kind="lib" path="/home/flex/coding/processing-1.0.9/lib/core.jar"/>
+	<classpathentry kind="lib" path="/home/flex/coding/idac/processing/libraries/gsvideo/library/gstreamer-java-bin-1.2.jar"/>
+	<classpathentry kind="lib" path="/home/flex/coding/idac/processing/libraries/gsvideo/library/gsvideo.jar"/>
+	<classpathentry kind="lib" path="/home/flex/coding/idac/processing/libraries/gsvideo/library/jna-3.1.0.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

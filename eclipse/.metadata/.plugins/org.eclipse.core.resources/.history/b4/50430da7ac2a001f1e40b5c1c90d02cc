@@ -1,0 +1,43 @@
+package totem;
+
+import ddf.minim.AudioInput;
+import ddf.minim.AudioPlayer;
+import ddf.minim.Minim;
+import processing.core.PApplet;
+
+
+public class Start extends PApplet{
+
+	Minim minim;
+	AudioPlayer player;
+	AudioInput input;
+	 	
+public void setup()
+{
+  size(100, 100);
+ 
+  minim = new Minim(this);
+  player = minim.loadFile("../resources/song.mp3");
+  input = minim.getLineIn();
+}
+ 
+public void draw()
+{
+  // do what you do
+}
+ 
+void stop()
+{
+  // the AudioPlayer you got from Minim.loadFile()
+  player.close();
+  // the AudioInput you got from Minim.getLineIn()
+  input.close();
+  minim.stop();
+ 
+  // this calls the stop method that 
+  // you are overriding by defining your own
+  // it must be called so that your application 
+  // can do all the cleanup it would normally do
+  super.stop();
+}
+}

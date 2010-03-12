@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="totem.graphic.SquareVisualization"/>
+<fullyQualifiedTypeName name="totem.sound.BeatListener"/>
+<fullyQualifiedTypeName name="ddf.minim.AudioSignal"/>
+<fullyQualifiedTypeName name="ddf.minim.AudioListener"/>
+<fullyQualifiedTypeName name="java.net.URL"/>
+<fullyQualifiedTypeName name="java.net.URLClassLoader"/>
+<fullyQualifiedTypeName name="processing.serial.Serial"/>
+<fullyQualifiedTypeName name="ddf.minim.Minim"/>
+<fullyQualifiedTypeName name="ddf.minim.AudioPlayer"/>
+<fullyQualifiedTypeName name="ddf.minim.AudioInput"/>
+<fullyQualifiedTypeName name="ddf.minim.analysis.BeatDetect"/>
+<fullyQualifiedTypeName name="codeanticode.gsvideo.GSCapture"/>
+<fullyQualifiedTypeName name="processing.core.PImage"/>
+<fullyQualifiedTypeName name="processing.core.PApplet"/>
+</qualifiedTypeNameHistroy>

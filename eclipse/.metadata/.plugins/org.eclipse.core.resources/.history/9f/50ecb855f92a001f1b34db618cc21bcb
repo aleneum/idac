@@ -1,0 +1,11 @@
+import totem.comm.*;
+
+  TSerialCommunicator signal;
+
+void setup(){
+  signal = new TSerialCommunicator(this);
+}
+
+void draw(){
+  
+}

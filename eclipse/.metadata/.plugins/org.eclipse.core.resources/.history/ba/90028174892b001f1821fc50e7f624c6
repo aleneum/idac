@@ -1,0 +1,56 @@
+package totem.video;
+
+import processing.core.PApplet;
+import processing.core.PImage;
+import processing.video.*;
+
+public class TWrappedCapture implements TVideoInterface {
+
+	Capture video;
+	
+	public TWrappedCapture(PApplet parent) {
+		video = new Capture(parent, parent.width, parent.height);
+	}
+
+	@Override
+	public boolean available() {
+		return video.available();
+	}
+
+	@Override
+	public int getHeight() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public PImage getPImage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getPixelColor(int index) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getWidth() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void loadPixels() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void read() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

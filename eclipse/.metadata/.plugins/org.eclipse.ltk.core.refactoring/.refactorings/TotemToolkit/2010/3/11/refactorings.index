@@ -1,0 +1,15 @@
+1268047849985	Rename type 'SquareVizualisation'
+1268054466489	Delete element
+1268056376477	Rename type 'AudioInput'
+1268056389144	Rename type 'BeatListener'
+1268056400072	Rename type 'Visualization'
+1268056410428	Rename type 'SerialCommunicator'
+1268056422699	Rename type 'SquareVisualization'
+1268056800962	Rename resource 'Sound.pde'
+1268056944162	Rename type 'TAudioInput'
+1268085081840	Copy compilation unit
+1268085088985	Delete element
+1268145503670	Rename package 'totem.graphic'
+1268145521006	Rename package 'totem.video'
+1268145529607	Delete elements
+1268147279051	Rename package 'totem.image'

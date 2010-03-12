@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move 1 elements(s) to &apos;TotemToolkit/src/totem.comm&apos;&#x0A;- Original project: &apos;TestLibrary&apos;&#x0A;- Destination element: &apos;TotemToolkit/src/totem.comm&apos;&#x0A;- Original element: &apos;template.MyProcessingSketch.java&apos;" description="Move compilation unit" destination="=TotemToolkit/src&lt;totem.comm" element1="/src&lt;template{MyProcessingSketch.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" patterns="*" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="false" stamp="1268085076207" units="1" version="1.0"/>
+</session>

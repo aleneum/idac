@@ -1,0 +1,19 @@
+package totem;
+import processing.core.PApplet;
+import totem.sound.TPlayer;
+
+public class MyProcessingSketch extends PApplet {
+
+	import totem.sound.*;
+	TPlayer player;
+	
+
+	public void setup(){
+		signal = new TPlayer(this,"groove.mp3");
+}	
+
+	public void draw(){
+  
+	}
+
+}

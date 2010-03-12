@@ -1,0 +1,57 @@
+package totem.video;
+
+import codeanticode.gsvideo.GSCapture;
+import processing.core.PApplet;
+import processing.core.PImage;
+
+public class TWrappedGSCapture implements TVideoInterface {
+	
+	private GSCapture video;
+	
+	public TWrappedGSCapture(PApplet parent) {
+		video = new GSCapture(parent, parent.width, parent.height);
+	}
+
+	@Override
+	public boolean available() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public int getHeight() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public PImage getPImage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getPicelColor() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getWidth() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void loadPixels() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void read() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

@@ -1,0 +1,13 @@
+import totem.sound.*;
+import totem.comm.*;
+import totem.graphic.*;
+
+void setup(){
+  
+  size(600, 600,P2D);
+  
+}
+
+void draw(){
+
+}

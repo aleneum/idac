@@ -1,0 +1,14 @@
+package totem.sound;
+
+import ddf.minim.AudioInput;
+import ddf.minim.AudioPlayer;
+import ddf.minim.Minim;
+import ddf.minim.analysis.BeatDetect;
+
+public class TPlayer {
+	Minim minim;
+	AudioPlayer player;
+	AudioInput in;
+	BeatDetect beat;
+	TBeatListener bl;
+}

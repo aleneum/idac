@@ -1,0 +1,15 @@
+package totem.video;
+
+import processing.core.*;
+
+public interface TVideoInterface {
+	
+	public int getWidth();
+	public int getHeight();
+	
+	public boolean available();
+	public void read();
+	public void loadPixels();
+	
+	public color getPicelColor(); 
+}

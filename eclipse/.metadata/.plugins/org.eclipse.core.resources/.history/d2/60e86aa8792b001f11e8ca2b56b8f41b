@@ -1,0 +1,7 @@
+package totem.video;
+
+public interface TVideoInterface {
+	
+	public int getWidth();
+	public int getHeight();
+}

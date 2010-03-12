@@ -1,0 +1,38 @@
+package totem.video;
+
+import processing.core.PImage;
+
+public class TVideoWrapper {
+
+	private TVideoInterface video;
+	private PImage prevFrame;
+
+	float threshold = 150;
+
+
+public initGStreamer(int width, int height){
+	  video = new GSCapture(this, width, height);
+	  this.init();
+}
+
+public initQuicktime(int width, int height){
+	video = new Capture(this, width, height);
+	this.init();
+}
+
+private void init(){
+	prevFrame = createImage(video.getWidth(),video.getHeight(),RGB);
+	fs = new FullScreen(this); 
+	fs.enter();
+}	
+
+public void update(){
+	if (video.available()) {
+		 // Save previous frame for motion detection!!
+		 prevFrame.copy(video.getPImage(),0,0,video.getWidth(),video.getHeight(),0,0,video.getWidth(),video.getHeight()); // Before we read the new frame, we always save the previous frame for comparison!
+		 prevFrame.updatePixels();
+		 video.read();
+	}
+}
+}
+

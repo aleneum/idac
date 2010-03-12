@@ -1,0 +1,36 @@
+package totem.graphic;
+
+public class SquareVisualization implements Visualization {
+
+	final int H_DIM = 10;
+	final int V_DIM = 10;
+	final float DECAY = 0.3;
+	
+	int[][] board;
+	int w,h;
+	
+	@Override
+	public void draw() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void hat() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void kick() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void snare() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+}

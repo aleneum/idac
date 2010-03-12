@@ -1,0 +1,21 @@
+package totem.sound;
+
+import processing.core.PApplet;
+import ddf.minim.AudioInput;
+import ddf.minim.AudioPlayer;
+import ddf.minim.Minim;
+import ddf.minim.analysis.BeatDetect;
+
+public class TPlayer {
+	Minim minim;
+	AudioPlayer player;
+	AudioInput in;
+	BeatDetect beat;
+	TBeatListener bl;
+	
+	public TPlayer(PApplet parent){
+		this.minim = new Minim(parent);
+		this.player = this.minim.loadFile("groove.mp3", 2048);
+	}
+	
+}

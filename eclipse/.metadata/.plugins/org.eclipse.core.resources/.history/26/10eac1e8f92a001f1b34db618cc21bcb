@@ -1,0 +1,11 @@
+package totem.sound;
+
+Minim minim;
+AudioPlayer player;
+AudioInput in;
+BeatDetect beat;
+BeatListener bl;
+
+public class TPlayer {
+
+}
