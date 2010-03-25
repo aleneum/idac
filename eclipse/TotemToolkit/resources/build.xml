@@ -144,7 +144,7 @@
   	
 	<!-- create the java reference of the library -->
  	<mkdir dir="${reference}" />
-<!-- 	<javadoc bottom="processing library ${libraryName} by ${author}. ${copyright}" 
+	<javadoc bottom="processing library ${libraryName} by ${author}. ${copyright}" 
  			 classpath="${libraryClasspath}/core.jar" 
  			 destdir="${reference}" 
  			 verbose="false" 
@@ -156,8 +156,7 @@
  		<fileset dir="${src}" defaultexcludes="yes">
  			<include name="**/*"/>
 		</fileset>
- 	</javadoc> -->
- 	
+ 	</javadoc>
 	<copy todir="${dist}/reference">
 		<fileset dir="${reference}" />
 	</copy>

@@ -3,29 +3,52 @@ package totem.sound;
 import ddf.minim.AudioSignal;
 import ddf.minim.AudioListener;
 
+/**
+ * Implementation of {@link AudioSignal}. It just stores the received 
+ * stereo sound information and make it accessible for other object.
+ * @author alex
+ *
+ */
 public class TAudioSignal implements AudioSignal, AudioListener{ 
-
+	
+	// arrays for sound information. two channel stereo sound is supported.
 	float[] left, right;
 
-	public void samples(float[] arg0) {
-		left = arg0;
+	/**
+	 * Receives mono sound information and stores it for later generating.
+	 * @param monoChannel mono sound information 
+	 */
+	public void samples(float[] monoChannel) {
+		left = monoChannel;
 	}
 
-	public void samples(float[] arg0, float[] arg1) {
-		left = arg0;
-		right = arg1;
+	/**
+	 * Receives stereo sound information and stores it for later generating.
+	 * @param leftChannel left sound channel
+	 * @param rightChannel sound channel
+	 */
+	public void samples(float[] leftChannel, float[] rightChannel) {
+		left = leftChannel;
+		right = rightChannel;
 	}
 
-	//Sending back.
-	public void generate(float[] arg0) {
-		System.arraycopy(left, 0, arg0, 0, arg0.length);
+	/**
+	 * Gives back mono sound information stored in the signal.
+	 * @param monoChannel array for storing the information in
+	 */
+	public void generate(float[] monoChannel) {
+		System.arraycopy(left, 0, monoChannel, 0, monoChannel.length);
 	}
 
-	public void generate(float[] arg0, float[] arg1) {
-		System.out.println(arg0[0]);
-		if (left!=null && right!=null){
-			System.arraycopy(left, 0, arg0, 0, arg0.length);
-			System.arraycopy(right, 0, arg1, 0, arg1.length);
+	/**
+	 * Gives back stereo sound information stored in the signal.
+	 * @param leftChannel array for storing the information of the left channel in
+	 * @param rightChannel array for storing the information of the right channel in 
+	 */
+	public void generate(float[] leftChannel, float[] rightChannel) {
+				if (left!=null && right!=null){
+			System.arraycopy(left, 0, leftChannel, 0, leftChannel.length);
+			System.arraycopy(right, 0, rightChannel, 0, rightChannel.length);
 		}
 	}
 }

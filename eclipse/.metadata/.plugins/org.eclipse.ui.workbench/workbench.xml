@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="31" version="2.0">
+<workbench progressCount="22" version="2.0">
 <workbenchAdvisor/>
-<window height="771" maximized="true" width="1026" x="238" y="38">
+<window height="771" maximized="true" width="1026" x="123" y="38">
 <fastViewData fastViewLocation="1024"/>
 <perspectiveBar>
 <itemSize x="160"/>
@@ -13,20 +13,24 @@
 <coolItem id="org.eclipse.debug.ui.launchActionSet" itemType="typeToolBarContribution" x="112" y="26"/>
 <coolItem id="org.eclipse.jdt.ui.JavaElementCreationActionSet" itemType="typeToolBarContribution" x="96" y="26"/>
 <coolItem id="org.eclipse.search.searchActionSet" itemType="typeToolBarContribution" x="96" y="26"/>
-<coolItem id="org.eclipse.ui.edit.text.actionSet.presentation" itemType="typeToolBarContribution" x="140" y="26"/>
+<coolItem id="org.eclipse.ui.edit.text.actionSet.presentation" itemType="typeToolBarContribution" x="88" y="26"/>
+<coolItem id="org.eclipse.wst.server.ui.internal.webbrowser.actionSet" itemType="typeToolBarContribution" x="36" y="26"/>
 <coolItem id="org.eclipse.wst.xml.ui.perspective.NewFileToolBar" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="org.eclipse.wst.xml.ui.design.DesignToolBar" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="group.nav" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.navigate" itemType="typeToolBarContribution" x="172" y="26"/>
 <coolItem id="group.editor" itemType="typeGroupMarker"/>
+<coolItem id="org.eclipse.wst.css.core.csssource.source" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="org.eclipse.php.editor" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
 <coolItem id="org.eclipse.jdt.ui.ClassFileEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.ui.DefaultTextEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="org.eclipse.ant.ui.internal.editor.AntEditor" itemType="typePlaceholder" x="-1" y="-1"/>
-<coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typeToolBarContribution" x="-1" y="-1"/>
+<coolItem id="org.eclipse.jdt.ui.CompilationUnitEditor" itemType="typePlaceholder" x="-1" y="-1"/>
 <coolItem id="group.help" itemType="typeGroupMarker"/>
 <coolItem id="org.eclipse.ui.workbench.help" itemType="typeToolBarContribution" x="-1" y="-1"/>
 </coolbarLayout>
-<page aggregateWorkingSetId="Aggregate for window 1267541244911" focus="true" label="Workspace - Java">
+<page aggregateWorkingSetId="Aggregate for window 1267541244911" focus="true" label="Workspace - PHP">
 <editors>
 <editorArea activeWorkbook="DefaultEditorWorkbook">
 <info part="DefaultEditorWorkbook">
@@ -34,30 +38,65 @@
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
 <part id="1"/>
+<part id="2"/>
+<part id="3"/>
+<part id="4"/>
+<part id="5"/>
+<part id="6"/>
 </presentation>
 </folder>
 </info>
 </editorArea>
-<editor id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TMotionDetection.java" partName="TMotionDetection.java" path="/home/flex/coding/idac/eclipse/TotemToolkit/src/totem/img/TMotionDetection.java" title="TMotionDetection.java" tooltip="TotemToolkit/src/totem/img/TMotionDetection.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/TotemToolkit/src/totem/img/TMotionDetection.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="332" selectionTopPixel="0"/>
+<editor id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" name="script.js" partName="script.js" path="/var/www/test/fb/richracerf1/script.js" title="script.js" tooltip="RichRacerF1/script.js" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/RichRacerF1/script.js"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1899" selectionTopPixel="867"/>
 </editor>
-<editor activePart="true" focus="true" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TSimpleText.java" partName="TSimpleText.java" path="/home/flex/coding/idac/eclipse/TotemToolkit/src/totem/visual/TSimpleText.java" title="TSimpleText.java" tooltip="TotemToolkit/src/totem/visual/TSimpleText.java" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/TotemToolkit/src/totem/visual/TSimpleText.java"/>
-<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="21" selectionTopPixel="0"/>
+<editor activePart="true" focus="true" id="org.eclipse.php.editor" name="auth.php" partName="auth.php" path="/var/www/test/fb/richracerf1/auth.php" title="auth.php" tooltip="RichRacerF1/auth.php" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/RichRacerF1/auth.php"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="624" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.php.editor" name="post.php" partName="post.php" path="/var/www/test/fb/richracerf1/post.php" title="post.php" tooltip="RichRacerF1/post.php" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/RichRacerF1/post.php"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1103" selectionTopPixel="280"/>
+</editor>
+<editor id="org.eclipse.php.editor" name="lib.php" partName="lib.php" path="/var/www/test/fb/richracerf1/lib.php" title="lib.php" tooltip="RichRacerF1/lib.php" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/RichRacerF1/lib.php"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="1887" selectionTopPixel="1120"/>
+</editor>
+<editor id="org.eclipse.php.editor" name="index.php" partName="index.php" path="/var/www/test/fb/richracerf1/index.php" title="index.php" tooltip="RichRacerF1/index.php" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/RichRacerF1/index.php"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="57" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.wst.css.core.csssource.source" name="style.css" partName="style.css" path="/var/www/test/fb/richracerf1/style.css" title="style.css" tooltip="RichRacerF1/style.css" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/RichRacerF1/style.css"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="27" selectionTopPixel="0"/>
+</editor>
+<editor id="org.eclipse.php.editor" name="config.php" partName="config.php" path="/var/www/test/fb/richracerf1/config.php" title="config.php" tooltip="RichRacerF1/config.php" workbook="DefaultEditorWorkbook">
+<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/RichRacerF1/config.php"/>
+<editorState selectionHorizontalPixel="0" selectionLength="0" selectionOffset="0" selectionTopPixel="0"/>
 </editor>
 </editors>
 <views>
 <view id="org.eclipse.jdt.ui.TypeHierarchy" partName="Hierarchy"/>
+<view id="org.eclipse.dltk.ui.TypeHierarchy" partName="Type Hierarchy">
+<viewState isWindowWorkingSet="false" mv_vertical_scroll="0" org.eclipse.dltk.ui.packages.linktypehierarchytoeditor="0" orientation="3" ratio="350" showinherited="false" sortbydefiningtype="false" vertical_scroll="0" view="2" workingSetName=""/>
+</view>
 <view id="org.eclipse.jdt.callhierarchy.view" partName="Call Hierarchy">
 <viewState search_scope_type="1"/>
 </view>
+<view id="org.eclipse.ant.ui.views.AntView" partName="Ant">
+<viewState>
+<project default="build" error="false" name="TotemToolkit" path="/TotemToolkit/resources/build.xml"/>
+<filterInternalTargets value="true"/>
+</viewState>
+</view>
+<view id="org.eclipse.ui.views.TaskList" partName="Tasks"/>
+<view id="org.eclipse.ui.views.ContentOutline" partName="Outline">
+<viewState/>
+</view>
 <view id="org.eclipse.ui.views.ProblemView" partName="Problems">
 <viewState PRIMARY_SORT_FIELD="org.eclipse.ui.ide.severityAndDescriptionField" categoryGroup="org.eclipse.ui.ide.severity" markerContentGenerator="org.eclipse.ui.ide.problemsGenerator" partName="Problems">
-<expanded>&#x0A;<category IMemento.internal.id="Warnings"/>
-<category IMemento.internal.id="Errors"/>
-</expanded>
-<columnWidths org.eclipse.ui.ide.locationField="0" org.eclipse.ui.ide.markerType="0" org.eclipse.ui.ide.pathField="0" org.eclipse.ui.ide.resourceField="0" org.eclipse.ui.ide.severityAndDescriptionField="0"/>
+<columnWidths org.eclipse.ui.ide.locationField="93" org.eclipse.ui.ide.markerType="532" org.eclipse.ui.ide.pathField="183" org.eclipse.ui.ide.resourceField="138" org.eclipse.ui.ide.severityAndDescriptionField="450"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.severityAndDescriptionField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.resourceField"/>
 <visible IMemento.internal.id="org.eclipse.ui.ide.pathField"/>
@@ -65,14 +104,32 @@
 <visible IMemento.internal.id="org.eclipse.ui.ide.markerType"/>
 </viewState>
 </view>
-<view id="org.eclipse.ui.console.ConsoleView" partName="Console">
-<viewState/>
+<view id="org.eclipse.php.ui.explorer" partName="PHP Explorer">
+<viewState group_libraries="1" isWindowWorkingSet="false" layout="2" linkWithEditor="0" rootMode="1" workingSetName="">
+<customFilters userDefinedPatternsEnabled="false">
+<xmlDefinedFilters>
+<child filterId="org.eclipse.php.ui.explorer.EmptyInnerPackageFilter" isEnabled="false"/>
+<child filterId="org.eclipse.php.ui.explorer.PHPHTMLFilter" isEnabled="false"/>
+<child filterId="org.eclipse.php.ui.explorer.NonScriptElementFilter" isEnabled="false"/>
+<child filterId="org.eclipse.php.ui.explorer.NonScriptProjectsFilter" isEnabled="false"/>
+<child filterId="org.eclipse.php.ui.explorer.NonPublicFilter" isEnabled="false"/>
+<child filterId="org.eclipse.php.ui.explorer.RSEProjectFilter" isEnabled="true"/>
+<child filterId="org.eclipse.php.ui.explorer.FieldsFilter" isEnabled="false"/>
+<child filterId="org.eclipse.php.ui.explorer.EmptyPackageFilter" isEnabled="false"/>
+<child filterId="org.eclipse.php.ui.explorer.ContainMembersFilter" isEnabled="false"/>
+<child filterId="org.eclipse.php.ui.explorer.LibraryFilter" isEnabled="false"/>
+<child filterId="org.eclipse.php.ui.explorer.SMFileFilter" isEnabled="false"/>
+<child filterId="org.eclipse.php.ui.explorer.NonSharedProjectsFilter" isEnabled="false"/>
+<child filterId="org.eclipse.php.ui.explorer.DotFilesFilter" isEnabled="true"/>
+<child filterId="org.eclipse.php.ui.explorer.ContainedLibraryFilter" isEnabled="false"/>
+<child filterId="org.eclipse.php.ui.explorer.ClosedProjectsFilter" isEnabled="false"/>
+</xmlDefinedFilters>
+</customFilters>
+</viewState>
 </view>
 <view id="org.eclipse.jdt.ui.PackageExplorer" partName="Package Explorer">
 <viewState group_libraries="1" layout="2" linkWithEditor="0" rootMode="1" workingSetName="">
-<customFilters userDefinedPatternsEnabled="false">
-<xmlDefinedFilters>
-<child filterId="org.eclipse.jdt.ui.PackageExplorer.LibraryFilter" isEnabled="false"/>
+<customFilters userDefinedPatternsEnabled="false">&#x0A;<xmlDefinedFilters>&#x0A;<child filterId="org.eclipse.jdt.ui.PackageExplorer.LibraryFilter" isEnabled="false"/>
 <child filterId="org.eclipse.jdt.ui.PackageExplorer.LocalTypesFilter" isEnabled="false"/>
 <child filterId="org.eclipse.jdt.ui.PackageExplorer.StaticsFilter" isEnabled="false"/>
 <child filterId="org.eclipse.jdt.ui.PackageExplorer.ClosedProjectsFilter" isEnabled="false"/>
@@ -96,31 +153,26 @@
 </customFilters>
 </viewState>
 </view>
-<view id="org.eclipse.ant.ui.views.AntView" partName="Ant">
-<viewState>
-<project default="build" error="false" name="TotemToolkit" path="/TotemToolkit/resources/build.xml"/>
-<filterInternalTargets value="true"/>
-</viewState>
+<view id="org.eclipse.ui.console.ConsoleView" partName="Console">
+<viewState/>
 </view>
 <view id="org.eclipse.mylyn.tasks.ui.views.tasks" partName="Task List">
 <viewState linkWithEditor="true" presentation="org.eclipse.mylyn.tasks.ui.categorized">
-<sorter groupBy="CATEGORY_QUERY">
-<sorter>
-<sort0 sortDirection="1" sortKey="PRIORITY"/>
+<sorter groupBy="CATEGORY_QUERY">&#x0A;<sorter>&#x0A;<sort0 sortDirection="1" sortKey="PRIORITY"/>
 <sort1 sortDirection="1" sortKey="DATE_CREATED"/>
 <sort2 sortDirection="1" sortKey="NONE"/>
 <sort3 sortDirection="1" sortKey="NONE"/>
+<sort4 sortDirection="1" sortKey="NONE"/>
+<sort5 sortDirection="1" sortKey="NONE"/>
+<sort6 sortDirection="1" sortKey="NONE"/>
 </sorter>
 </sorter>
 </viewState>
-</view>
-<view id="org.eclipse.ui.views.ContentOutline" partName="Outline">
-<viewState/>
 </view>
 <view id="org.eclipse.jdt.ui.SourceView" partName="Declaration"/>
 <view id="org.eclipse.jdt.ui.JavadocView" partName="Javadoc"/>
 </views>
-<perspectives activePart="org.eclipse.jdt.ui.CompilationUnitEditor" activePerspective="org.eclipse.jdt.ui.JavaPerspective">
+<perspectives activePart="org.eclipse.php.ui.explorer" activePerspective="org.eclipse.php.perspective">
 <perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
 <descriptor class="org.eclipse.jdt.internal.ui.JavaPerspectiveFactory" id="org.eclipse.jdt.ui.JavaPerspective" label="Java"/>
 <alwaysOnActionSet id="org.eclipse.mylyn.context.ui.actionSet"/>
@@ -185,33 +237,24 @@
 <view id="org.eclipse.ant.ui.views.AntView"/>
 <view id="org.eclipse.mylyn.tasks.ui.views.tasks"/>
 <fastViewBars/>
-<layout>
-<mainWindow>
-<info folder="true" part="left">
-<folder activePageID="org.eclipse.jdt.ui.PackageExplorer" appearance="2" expanded="2">
-<page content="org.eclipse.jdt.ui.PackageExplorer" label="Package Explorer"/>
+<layout>&#x0A;<mainWindow>&#x0A;<info folder="true" part="left">&#x0A;<folder activePageID="org.eclipse.jdt.ui.PackageExplorer" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.jdt.ui.PackageExplorer" label="Package Explorer"/>
 <page content="org.eclipse.jdt.ui.TypeHierarchy" label="Hierarchy"/>
 <page content="org.eclipse.ui.views.ResourceNavigator" label="LabelNotFound"/>
 <page content="org.eclipse.ui.navigator.ProjectExplorer" label="LabelNotFound"/>
 <page content="org.eclipse.jdt.junit.ResultView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
 <part id="1"/>
 </presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@1ca6954" ratio="0.7495049" ratioLeft="757" ratioRight="253" relationship="2" relative="left">
-<folder appearance="2" expanded="2">
-<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@1ca6954" ratio="0.7495049" ratioLeft="757" ratioRight="253" relationship="2" relative="left">&#x0A;<folder appearance="2" expanded="2">&#x0A;<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
 <page content="org.eclipse.ui.cheatsheets.views.CheatSheetView" label="LabelNotFound"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 <info part="org.eclipse.ui.editorss" ratio="0.2246326" ratioLeft="321" ratioRight="1108" relationship="2" relative="left"/>
-<info folder="true" part="bottom" ratio="0.67076504" ratioLeft="491" ratioRight="241" relationship="4" relative="org.eclipse.ui.editorss">
-<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">
-<page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
+<info folder="true" part="bottom" ratio="0.67076504" ratioLeft="491" ratioRight="241" relationship="4" relative="org.eclipse.ui.editorss">&#x0A;<folder activePageID="org.eclipse.ui.console.ConsoleView" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
 <page content="org.eclipse.jdt.ui.JavadocView" label="Javadoc"/>
 <page content="org.eclipse.jdt.ui.SourceView" label="Declaration"/>
 <page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
@@ -219,8 +262,7 @@
 <page content="org.eclipse.search.ui.views.SearchView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.BookmarkView" label="LabelNotFound"/>
 <page content="org.eclipse.ui.views.ProgressView" label="LabelNotFound"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
 <part id="1"/>
 <part id="2"/>
 <part id="3"/>
@@ -228,19 +270,110 @@
 </presentation>
 </folder>
 </info>
-<info folder="true" part="org.eclipse.ui.internal.ViewStack@4f14b0" ratio="0.74934036" ratioLeft="568" ratioRight="190" relationship="2" relative="org.eclipse.ui.editorss">
-<folder activePageID="org.eclipse.mylyn.tasks.ui.views.tasks" appearance="2" expanded="2">
-<page content="org.eclipse.mylyn.tasks.ui.views.tasks" label="Task List"/>
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
+<info folder="true" part="org.eclipse.ui.internal.ViewStack@4f14b0" ratio="0.74934036" ratioLeft="568" ratioRight="190" relationship="2" relative="org.eclipse.ui.editorss">&#x0A;<folder activePageID="org.eclipse.mylyn.tasks.ui.views.tasks" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.mylyn.tasks.ui.views.tasks" label="Task List"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
 </presentation>
 </folder>
 </info>
-<info folder="true" part="right" ratio="0.5" ratioLeft="239" ratioRight="239" relationship="4" relative="org.eclipse.ui.internal.ViewStack@4f14b0">
-<folder activePageID="org.eclipse.ant.ui.views.AntView" appearance="2" expanded="2">
-<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
+<info folder="true" part="right" ratio="0.5" ratioLeft="239" ratioRight="239" relationship="4" relative="org.eclipse.ui.internal.ViewStack@4f14b0">&#x0A;<folder activePageID="org.eclipse.ant.ui.views.AntView" appearance="2" expanded="2">&#x0A;<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
 <page content="org.eclipse.ant.ui.views.AntView" label="Ant"/>
 <page content="org.eclipse.ui.texteditor.TemplatesView" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">&#x0A;<part id="0"/>
+<part id="1"/>
+</presentation>
+</folder>
+</info>
+</mainWindow>
+</layout>
+</perspective>
+<perspective editorAreaTrimState="2" editorAreaVisible="1" fixed="0" version="0.016">
+<descriptor class="org.eclipse.php.internal.ui.PHPPerspectiveFactory" id="org.eclipse.php.perspective" label="PHP"/>
+<alwaysOnActionSet id="org.eclipse.ui.cheatsheets.actionSet"/>
+<alwaysOnActionSet id="org.eclipse.search.searchActionSet"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.annotationNavigation"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.navigation"/>
+<alwaysOnActionSet id="org.eclipse.ui.edit.text.actionSet.convertLineDelimitersTo"/>
+<alwaysOnActionSet id="org.eclipse.ui.externaltools.ExternalToolsSet"/>
+<alwaysOnActionSet id="org.eclipse.ui.actionSet.keyBindings"/>
+<alwaysOnActionSet id="org.eclipse.ui.actionSet.openFiles"/>
+<alwaysOnActionSet id="org.eclipse.mylyn.context.ui.actionSet"/>
+<alwaysOnActionSet id="org.eclipse.mylyn.doc.actionSet"/>
+<alwaysOnActionSet id="org.eclipse.mylyn.tasks.ui.navigation"/>
+<alwaysOnActionSet id="org.eclipse.debug.ui.launchActionSet"/>
+<alwaysOnActionSet id="org.eclipse.ui.NavigateActionSet"/>
+<alwaysOnActionSet id="org.eclipse.php.ui.PHPActionSet"/>
+<alwaysOnActionSet id="org.eclipse.debug.ui.breakpointActionSet"/>
+<alwaysOnActionSet id="org.eclipse.wst.server.ui.internal.webbrowser.actionSet"/>
+<alwaysOnActionSet id="org.eclipse.php.ui.text.php.actionSet.presentation"/>
+<show_view_action id="org.eclipse.php.ui.explorer"/>
+<show_view_action id="org.eclipse.dltk.ui.TypeHierarchy"/>
+<show_view_action id="org.eclipse.php.ui.functions"/>
+<show_view_action id="org.eclipse.php.ui.projectOutline"/>
+<show_view_action id="org.eclipse.ui.console.ConsoleView"/>
+<show_view_action id="org.eclipse.mylyn.tasks.ui.views.tasks"/>
+<show_view_action id="org.eclipse.ui.views.ContentOutline"/>
+<show_view_action id="org.eclipse.ui.views.ProblemView"/>
+<show_view_action id="org.eclipse.ui.views.TaskList"/>
+<show_view_action id="org.eclipse.ui.views.ResourceNavigator"/>
+<new_wizard_action id="org.eclipse.mylyn.tasks.ui.wizards.new.repository.task"/>
+<new_wizard_action id="org.eclipse.php.ui.wizards.PHPProjectCreationWizard"/>
+<new_wizard_action id="org.eclipse.php.ui.wizards.PHPFileCreationWizard"/>
+<new_wizard_action id="org.eclipse.ui.wizards.new.folder"/>
+<new_wizard_action id="org.eclipse.ui.wizards.new.file"/>
+<new_wizard_action id="org.eclipse.wst.css.ui.internal.wizard.NewCSSWizard"/>
+<new_wizard_action id="org.eclipse.wst.html.ui.internal.wizard.NewHTMLWizard"/>
+<new_wizard_action id="org.eclipse.wst.xml.ui.internal.wizards.NewXMLWizard"/>
+<new_wizard_action id="org.eclipse.ui.editors.wizards.UntitledTextFileWizard"/>
+<perspective_action id="org.eclipse.php.perspective"/>
+<perspective_action id="org.eclipse.php.debug.ui.PHPDebugPerspective"/>
+<hide_toolbar_item_id id="org.eclipse.ui.edit.text.toggleShowSelectedElementOnly"/>
+<view id="org.eclipse.php.ui.explorer"/>
+<view id="org.eclipse.dltk.ui.TypeHierarchy"/>
+<view id="org.eclipse.ui.views.ProblemView"/>
+<view id="org.eclipse.ui.views.TaskList"/>
+<view id="org.eclipse.ui.console.ConsoleView"/>
+<view id="org.eclipse.ui.views.ContentOutline"/>
+<view id="org.eclipse.mylyn.tasks.ui.views.tasks"/>
+<fastViewBars/>
+<layout>
+<mainWindow>
+<info folder="true" part="topLeft">
+<folder activePageID="org.eclipse.php.ui.explorer" appearance="2" expanded="2">
+<page content="org.eclipse.php.ui.explorer" label="PHP Explorer"/>
+<page content="org.eclipse.dltk.ui.TypeHierarchy" label="Type Hierarchy"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+<part id="1"/>
+</presentation>
+</folder>
+</info>
+<info folder="true" part="stickyFolderRight" ratio="0.75" ratioLeft="1074" ratioRight="358" relationship="2" relative="topLeft">
+<folder appearance="2" expanded="2">
+<page content="org.eclipse.help.ui.HelpView" label="LabelNotFound"/>
+<page content="org.eclipse.ui.internal.introview" label="LabelNotFound"/>
+<page content="org.eclipse.ui.cheatsheets.views.CheatSheetView" label="LabelNotFound"/>
+</folder>
+</info>
+<info part="org.eclipse.ui.editorss" ratio="0.21997207" ratioLeft="315" ratioRight="1117" relationship="2" relative="topLeft"/>
+<info folder="true" part="bottom" ratio="0.74965984" ratioLeft="551" ratioRight="184" relationship="4" relative="org.eclipse.ui.editorss">
+<folder activePageID="org.eclipse.ui.views.ProblemView" appearance="2" expanded="2">
+<page content="org.eclipse.ui.views.ProblemView" label="Problems"/>
+<page content="org.eclipse.ui.views.TaskList" label="Tasks"/>
+<page content="org.eclipse.ui.console.ConsoleView" label="Console"/>
+<page content="org.eclipse.ui.views.BookmarkView" label="LabelNotFound"/>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
+<part id="0"/>
+<part id="1"/>
+<part id="2"/>
+</presentation>
+</folder>
+</info>
+<info folder="true" part="right" ratio="0.74932855" ratioLeft="837" ratioRight="280" relationship="2" relative="org.eclipse.ui.editorss">
+<folder activePageID="org.eclipse.ui.views.ContentOutline" appearance="2" expanded="2">
+<page content="org.eclipse.ui.views.ContentOutline" label="Outline"/>
+<page content="org.eclipse.mylyn.tasks.ui.views.tasks" label="Task List"/>
+<page content="org.eclipse.php.ui.projectOutline" label="LabelNotFound"/>
+<page content="org.eclipse.php.ui.functions" label="LabelNotFound"/>
 <presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
 <part id="0"/>
 <part id="1"/>
@@ -254,168 +387,170 @@
 <workingSets/>
 <navigationHistory>
 <editors>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/TotemToolkit/src/totem/video/TVideoWrapper.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/TotemToolkit/src/totem/video/TVideoInterface.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/TotemToolkit/src/totem/video/TWrappedGSCapture.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/TotemToolkit/src/totem/video/TWrappedCapture.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/TotemToolkit/src/totem/image/TVideoWrapper.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/TotemToolkit/src/totem/image/TVideoInterface.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/TotemToolkit/src/totem/image/TWrappedGSCapture.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/TotemToolkit/src/totem/image/TWrappedCapture.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/TotemToolkit/src/totem/image/TMotionDetection.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/TotemToolkit/src/totem/img/TMotionDetection.java"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/TotemToolkit/examples/Totem01/Totem01.pde"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" path="/TotemToolkit/src/totem/visual/TSimpleText.java"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" path="/RichRacerF1/script.js"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.php.editor" path="/RichRacerF1/post.php"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.php.editor" path="/RichRacerF1/lib.php"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.php.editor" path="/RichRacerF1/index.php"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.css.core.csssource.source" path="/RichRacerF1/style.css"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.php.editor" path="/RichRacerF1/auth.php"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.php.editor" path="/RichRacerF1/lib.php"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.css.core.csssource.source" path="/RichRacerF1/style.css"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.php.editor" path="/RichRacerF1/index.php"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.php.editor" path="/RichRacerF1/index.php"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.php.editor" path="/RichRacerF1/post.php"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.php.editor" path="/RichRacerF1/lib.php"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.php.editor" path="/RichRacerF1/auth.php"/>
+<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.php.editor" path="/RichRacerF1/config.php"/>
 </editors>
-<item historyLabel="TWrappedGSCapture.java" index="2">
-<position info="not_deleted" x="216" y="6"/>
+<item historyLabel="post.php" index="1">
+<position info="not_deleted" x="2637" y="0"/>
 </item>
-<item historyLabel="TWrappedGSCapture.java" index="2">
-<position info="not_deleted" x="232" y="0"/>
+<item historyLabel="lib.php" index="2">
+<position info="not_deleted" x="3305" y="125"/>
 </item>
-<item historyLabel="TWrappedGSCapture.java" index="2">
-<position info="not_deleted" x="146" y="0"/>
+<item historyLabel="post.php" index="1">
+<position info="not_deleted" x="2637" y="0"/>
 </item>
-<item historyLabel="TVideoWrapper.java" index="0">
-<position info="not_deleted" x="256" y="29"/>
+<item historyLabel="auth.php" index="5">
+<position info="not_deleted" x="342" y="25"/>
 </item>
-<item historyLabel="TWrappedGSCapture.java" index="2">
-<position info="not_deleted" x="146" y="0"/>
+<item historyLabel="script.js" index="0">
+<position/>
 </item>
-<item historyLabel="TWrappedGSCapture.java" index="2">
-<position info="not_deleted" x="320" y="0"/>
+<item historyLabel="post.php" index="1">
+<position info="not_deleted" x="2637" y="0"/>
 </item>
-<item historyLabel="TWrappedGSCapture.java" index="2">
-<position info="not_deleted" x="196" y="9"/>
+<item historyLabel="script.js" index="0">
+<position/>
 </item>
-<item historyLabel="TWrappedGSCapture.java" index="2">
-<position info="not_deleted" x="123" y="0"/>
+<item historyLabel="post.php" index="1">
+<position info="not_deleted" x="2637" y="0"/>
 </item>
-<item historyLabel="TWrappedGSCapture.java" index="2">
-<position info="not_deleted" x="601" y="0"/>
+<item historyLabel="lib.php" index="2">
+<position info="not_deleted" x="3305" y="125"/>
 </item>
-<item historyLabel="TVideoInterface.java" index="1">
-<position info="not_deleted" x="234" y="0"/>
+<item historyLabel="post.php" index="1">
+<position info="not_deleted" x="2637" y="0"/>
 </item>
-<item historyLabel="TWrappedGSCapture.java" index="2">
-<position info="not_deleted" x="601" y="0"/>
+<item historyLabel="post.php" index="1">
+<position info="not_deleted" x="3017" y="0"/>
 </item>
-<item historyLabel="TVideoInterface.java" index="1">
+<item historyLabel="post.php" index="1">
+<position info="not_deleted" x="2568" y="0"/>
+</item>
+<item historyLabel="script.js" index="0">
+<position info="not_deleted" x="1899" y="0"/>
+</item>
+<item historyLabel="index.php" index="3">
+<position info="not_deleted" x="431" y="0"/>
+</item>
+<item historyLabel="lib.php" index="2">
+<position info="not_deleted" x="3305" y="125"/>
+</item>
+<item historyLabel="index.php" index="3">
+<position info="not_deleted" x="595" y="0"/>
+</item>
+<item historyLabel="style.css" index="4">
+<position info="not_deleted" x="802" y="0"/>
+</item>
+<item historyLabel="script.js" index="0">
+<position info="not_deleted" x="1899" y="0"/>
+</item>
+<item historyLabel="index.php" index="3">
+<position info="not_deleted" x="461" y="0"/>
+</item>
+<item historyLabel="style.css" index="4">
+<position info="not_deleted" x="802" y="0"/>
+</item>
+<item historyLabel="index.php" index="3">
+<position info="not_deleted" x="461" y="0"/>
+</item>
+<item historyLabel="style.css" index="4">
+<position info="not_deleted" x="111" y="0"/>
+</item>
+<item historyLabel="index.php" index="3">
+<position info="not_deleted" x="461" y="0"/>
+</item>
+<item historyLabel="style.css" index="4">
+<position info="not_deleted" x="847" y="0"/>
+</item>
+<item historyLabel="index.php" index="3">
+<position info="not_deleted" x="425" y="0"/>
+</item>
+<item historyLabel="style.css" index="4">
+<position/>
+</item>
+<item historyLabel="index.php" index="3">
+<position info="not_deleted" x="431" y="0"/>
+</item>
+<item historyLabel="style.css" index="4">
+<position info="not_deleted" x="1017" y="0"/>
+</item>
+<item historyLabel="index.php" index="3">
 <position info="not_deleted" x="251" y="0"/>
 </item>
-<item historyLabel="TWrappedGSCapture.java" index="2">
-<position info="not_deleted" x="601" y="0"/>
+<item historyLabel="post.php" index="1">
+<position info="not_deleted" x="2568" y="0"/>
 </item>
-<item historyLabel="TWrappedGSCapture.java" index="2">
-<position info="not_deleted" x="601" y="0"/>
+<item historyLabel="lib.php" index="6">
+<position info="not_deleted" x="3312" y="125"/>
 </item>
-<item historyLabel="TWrappedGSCapture.java" index="2">
+<item historyLabel="style.css" index="7">
+<position/>
+</item>
+<item historyLabel="index.php" index="8">
+<position info="not_deleted" x="597" y="0"/>
+</item>
+<item historyLabel="lib.php" index="6">
+<position info="not_deleted" x="1716" y="0"/>
+</item>
+<item historyLabel="style.css" index="7">
+<position info="not_deleted" x="1238" y="0"/>
+</item>
+<item historyLabel="lib.php" index="6">
+<position info="not_deleted" x="8482" y="0"/>
+</item>
+<item historyLabel="style.css" index="7">
+<position info="not_deleted" x="1239" y="0"/>
+</item>
+<item historyLabel="index.php" index="9">
+<position info="not_deleted" x="534" y="0"/>
+</item>
+<item historyLabel="style.css" index="7">
+<position info="not_deleted" x="0" y="0"/>
+</item>
+<item historyLabel="post.php" index="10">
+<position info="not_deleted" x="1103" y="0"/>
+</item>
+<item historyLabel="lib.php" index="11">
 <position info="not_deleted" x="5" y="0"/>
 </item>
-<item historyLabel="TVideoInterface.java" index="1">
-<position info="not_deleted" x="251" y="0"/>
+<item historyLabel="post.php" index="10">
+<position info="not_deleted" x="1103" y="0"/>
 </item>
-<item historyLabel="TVideoWrapper.java" index="0">
-<position info="not_deleted" x="256" y="29"/>
+<item historyLabel="auth.php" index="12">
+<position info="not_deleted" x="624" y="0"/>
 </item>
-<item historyLabel="TVideoWrapper.java" index="0">
-<position info="not_deleted" x="362" y="15"/>
+<item historyLabel="lib.php" index="11">
+<position info="not_deleted" x="2844" y="0"/>
 </item>
-<item historyLabel="TWrappedCapture.java" index="3">
+<item historyLabel="style.css" index="7">
+<position info="not_deleted" x="686" y="0"/>
+</item>
+<item historyLabel="lib.php" index="11">
+<position info="not_deleted" x="1887" y="0"/>
+</item>
+<item historyLabel="style.css" index="7">
+<position info="not_deleted" x="27" y="0"/>
+</item>
+<item historyLabel="index.php" index="9">
+<position info="not_deleted" x="57" y="0"/>
+</item>
+<item historyLabel="config.php" index="13">
 <position info="not_deleted" x="0" y="0"/>
 </item>
-<item historyLabel="TWrappedCapture.java" index="3">
-<position info="not_deleted" x="187" y="0"/>
-</item>
-<item historyLabel="TWrappedCapture.java" index="3">
-<position info="not_deleted" x="173" y="7"/>
-</item>
-<item historyLabel="TWrappedCapture.java" index="3">
-<position info="not_deleted" x="189" y="0"/>
-</item>
-<item historyLabel="TWrappedCapture.java" index="3">
-<position info="not_deleted" x="301" y="0"/>
-</item>
-<item historyLabel="TVideoWrapper.java" index="0">
-<position info="not_deleted" x="362" y="15"/>
-</item>
-<item historyLabel="TWrappedCapture.java" index="3">
-<position info="not_deleted" x="191" y="6"/>
-</item>
-<item historyLabel="TWrappedCapture.java" index="3">
-<position info="not_deleted" x="241" y="0"/>
-</item>
-<item historyLabel="TWrappedGSCapture.java" index="2">
-<position info="not_deleted" x="5" y="0"/>
-</item>
-<item historyLabel="TVideoWrapper.java" index="4">
-<position info="not_deleted" x="358" y="27"/>
-</item>
-<item historyLabel="TVideoInterface.java" index="5">
-<position info="not_deleted" x="251" y="0"/>
-</item>
-<item historyLabel="TWrappedGSCapture.java" index="6">
-<position info="not_deleted" x="320" y="0"/>
-</item>
-<item historyLabel="TWrappedCapture.java" index="7">
-<position info="not_deleted" x="241" y="0"/>
-</item>
-<item historyLabel="TMotionDetection.java" index="8">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item historyLabel="TMotionDetection.java" index="8">
-<position info="not_deleted" x="206" y="0"/>
-</item>
-<item historyLabel="TMotionDetection.java" index="8">
-<position info="not_deleted" x="260" y="0"/>
-</item>
-<item historyLabel="TMotionDetection.java" index="8">
-<position info="not_deleted" x="249" y="6"/>
-</item>
-<item historyLabel="TMotionDetection.java" index="8">
-<position info="not_deleted" x="988" y="0"/>
-</item>
-<item historyLabel="TMotionDetection.java" index="8">
-<position info="not_deleted" x="980" y="7"/>
-</item>
-<item historyLabel="TMotionDetection.java" index="8">
-<position info="not_deleted" x="428" y="0"/>
-</item>
-<item historyLabel="TMotionDetection.java" index="8">
-<position info="not_deleted" x="510" y="0"/>
-</item>
-<item historyLabel="TMotionDetection.java" index="8">
-<position info="not_deleted" x="759" y="13"/>
-</item>
-<item historyLabel="TMotionDetection.java" index="8">
-<position info="not_deleted" x="162" y="0"/>
-</item>
-<item historyLabel="TMotionDetection.java" index="8">
-<position info="not_deleted" x="323" y="0"/>
-</item>
-<item historyLabel="TMotionDetection.java" index="9">
-<position info="not_deleted" x="1291" y="0"/>
-</item>
-<item historyLabel="TMotionDetection.java" index="9">
-<position info="not_deleted" x="1289" y="0"/>
-</item>
-<item historyLabel="TMotionDetection.java" index="9">
-<position info="not_deleted" x="1470" y="0"/>
-</item>
-<item historyLabel="TMotionDetection.java" index="9">
-<position info="not_deleted" x="221" y="0"/>
-</item>
-<item historyLabel="Totem01.pde" index="10">
-<position info="not_deleted" x="1306" y="0"/>
-</item>
-<item historyLabel="TMotionDetection.java" index="9">
-<position info="not_deleted" x="117" y="0"/>
-</item>
-<item historyLabel="TSimpleText.java" index="11">
-<position info="not_deleted" x="0" y="0"/>
-</item>
-<item active="true" historyLabel="TSimpleText.java" index="11">
-<position info="not_deleted" x="392" y="0"/>
+<item active="true" historyLabel="auth.php" index="12">
+<position info="not_deleted" x="624" y="0"/>
 </item>
 </navigationHistory>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
@@ -423,6 +558,13 @@
 <workbenchWindowAdvisor/>
 <actionBarAdvisor/>
 <trimLayout>
+<trimArea IMemento.internal.id="16384">
+<trimItem IMemento.internal.id="topLeft"/>
+</trimArea>
+<trimArea IMemento.internal.id="131072">
+<trimItem IMemento.internal.id="bottom"/>
+<trimItem IMemento.internal.id="right"/>
+</trimArea>
 <trimArea IMemento.internal.id="128">
 <trimItem IMemento.internal.id="org.eclipse.ui.internal.WorkbenchWindow.topBar"/>
 </trimArea>
@@ -434,47 +576,47 @@
 </trimLayout>
 </window>
 <mruList>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TSimpleText.java" tooltip="TotemToolkit/src/totem/visual/TSimpleText.java">
-<persistable path="/TotemToolkit/src/totem/visual/TSimpleText.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.php.editor" name="config.php" tooltip="RichRacerF1/config.php">
+<persistable path="/RichRacerF1/config.php"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.css.core.csssource.source" name="style.css" tooltip="RichRacerF1/style.css">
+<persistable path="/RichRacerF1/style.css"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.php.editor" name="box.php" tooltip="RichRacerF1/box.php">
+<persistable path="/RichRacerF1/box.php"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.php.editor" name="index.php" tooltip="RichRacerF1/index.php">
+<persistable path="/RichRacerF1/index.php"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.php.editor" name="lib.php" tooltip="RichRacerF1/lib.php">
+<persistable path="/RichRacerF1/lib.php"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.php.editor" name="post.php" tooltip="RichRacerF1/post.php">
+<persistable path="/RichRacerF1/post.php"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.php.editor" name="auth.php" tooltip="RichRacerF1/auth.php">
+<persistable path="/RichRacerF1/auth.php"/>
+</file>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.wst.jsdt.ui.CompilationUnitEditor" name="script.js" tooltip="RichRacerF1/script.js">
+<persistable path="/RichRacerF1/script.js"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="Totem01.pde" tooltip="TotemToolkit/examples/Totem01/Totem01.pde">
 <persistable path="/TotemToolkit/examples/Totem01/Totem01.pde"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TMotionDetection.java" tooltip="TotemToolkit/src/totem/image/TMotionDetection.java">
-<persistable path="/TotemToolkit/src/totem/image/TMotionDetection.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="SoundExample.pde" tooltip="TotemToolkit/examples/SoundExample/SoundExample.pde">
+<persistable path="/TotemToolkit/examples/SoundExample/SoundExample.pde"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TWrappedCapture.java" tooltip="TotemToolkit/src/totem/video/TWrappedCapture.java">
-<persistable path="/TotemToolkit/src/totem/video/TWrappedCapture.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" name="Hello.pde" tooltip="TotemToolkit/examples/Hello/Hello.pde">
+<persistable path="/TotemToolkit/examples/Hello/Hello.pde"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TWrappedGSCapture.java" tooltip="TotemToolkit/src/totem/video/TWrappedGSCapture.java">
-<persistable path="/TotemToolkit/src/totem/video/TWrappedGSCapture.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TVisualization.java" tooltip="TotemToolkit/src/totem/visual/TVisualization.java">
+<persistable path="/TotemToolkit/src/totem/visual/TVisualization.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TVideoInterface.java" tooltip="TotemToolkit/src/totem/video/TVideoInterface.java">
-<persistable path="/TotemToolkit/src/totem/video/TVideoInterface.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TSquareVisualization.java" tooltip="TotemToolkit/src/totem/visual/TSquareVisualization.java">
+<persistable path="/TotemToolkit/src/totem/visual/TSquareVisualization.java"/>
 </file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TVideoWrapper.java" tooltip="TotemToolkit/src/totem/video/TVideoWrapper.java">
-<persistable path="/TotemToolkit/src/totem/video/TVideoWrapper.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TVisualization.java" tooltip="TotemToolkit/src/totem/graphic/TVisualization.java">
-<persistable path="/TotemToolkit/src/totem/graphic/TVisualization.java"/>
-</file>
-<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="BeatDetect.class" tooltip="ddf.minim.analysis.BeatDetect">
-<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=TotemToolkit/\/home\/flex\/coding\/processing-1.0.9\/libraries\/minim\/library\/minim.jar&lt;ddf.minim.analysis(BeatDetect.class"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TSimpleText.java" tooltip="TotemToolkit/src/totem/graphic/TSimpleText.java">
-<persistable path="/TotemToolkit/src/totem/graphic/TSimpleText.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TSquareVisualization.java" tooltip="TotemToolkit/src/totem/graphic/TSquareVisualization.java">
-<persistable path="/TotemToolkit/src/totem/graphic/TSquareVisualization.java"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TSerialCommunicator.java" tooltip="TotemToolkit/src/totem/comm/TSerialCommunicator.java">
-<persistable path="/TotemToolkit/src/totem/comm/TSerialCommunicator.java"/>
-</file>
-<file factoryID="org.eclipse.jdt.ui.ClassFileEditorInputFactory" id="org.eclipse.jdt.ui.ClassFileEditor" name="JSMinim.class" tooltip="ddf.minim.javasound.JSMinim">
-<persistable org.eclipse.jdt.ui.ClassFileIdentifier="=TotemToolkit/\/home\/flex\/coding\/processing-1.0.9\/libraries\/minim\/library\/jsminim.jar&lt;ddf.minim.javasound(JSMinim.class"/>
-</file>
-<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="MyProcessingSketch.java" tooltip="TotemToolkit/src/MyProcessingSketch.java">
-<persistable path="/TotemToolkit/src/MyProcessingSketch.java"/>
+<file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TSimpleText.java" tooltip="TotemToolkit/src/totem/visual/TSimpleText.java">
+<persistable path="/TotemToolkit/src/totem/visual/TSimpleText.java"/>
 </file>
 <file factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.jdt.ui.CompilationUnitEditor" name="TPlayer.java" tooltip="TotemToolkit/src/totem/sound/TPlayer.java">
 <persistable path="/TotemToolkit/src/totem/sound/TPlayer.java"/>

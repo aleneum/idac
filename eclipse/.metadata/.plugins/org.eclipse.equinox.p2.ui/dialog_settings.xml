@@ -10,7 +10,7 @@
 	<section name="AvailableIUsPage">
 		<item value="800" key="AvailableListSashWeight"/>
 		<item value="true" key="ResolveInstallWithAllSites"/>
-		<item value="541" key="AvailableVersionColumnWidth"/>
+		<item value="563" key="AvailableVersionColumnWidth"/>
 		<item value="false" key="HideInstalledContent"/>
 		<item value="360" key="AvailableNameColumnWidth"/>
 		<item value="1" key="AvailableViewType"/>
