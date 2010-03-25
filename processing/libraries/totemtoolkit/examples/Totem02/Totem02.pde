@@ -9,7 +9,8 @@ import processing.serial.*;
 
 import totem.comm.*;
 import totem.sound.*;
-import totem.graphic.*;
+import totem.visual.*;
+import totem.img.*;
 
 import fullscreen.*;  
 
@@ -57,6 +58,12 @@ public boolean showGUI=true;
 int textColor = 0;
 // defines the increase or decrease of the tension in the next loop
 public float tensionAcc = 0;
+// micro in level
+public float inLevel = 0;
+
+//delay for sending msgs
+int sendDelay = 0;
+
 
 void setup() {
   //Setup size of the screen
@@ -65,10 +72,10 @@ void setup() {
   //initialize controlp5 and add gui elements
   controlp5 = new ControlP5(this);
   //sliders on the left side
-  controlp5.addSlider(VOLUME_CONTROLLER,-50,50,INIT_GAIN,10,10,100,14).setId(1);
+  controlp5.addSlider(VOLUME_CONTROLLER,-50,50,0,10,10,100,14).setId(1);
   controlp5.addSlider(INPUT_CONTROLLER,0,100,input,10,25,100,14).setId(2);
   controlp5.addSlider(DECAY_CONTROLLER,0,1,decay,10,40,100,14).setId(3);
-  controlp5.addSlider(MIC_CONTROLLER,0,1,INIT_GAIN,10,55,100,14).setId(4);
+  controlp5.addSlider(MIC_CONTROLLER,0,1,0,10,55,100,14).setId(4);
   
   // and number boxes on the right
   controlp5.addNumberbox(TENSION_CONTROLLER, tension, width-110, 10, 100,14).setId(20);
@@ -154,9 +161,8 @@ void draw() {
   }
   player.setGain(gain);
 
-
   // check the microphone input from the player object
-  float inLevel = player.getInLevel();
+  inLevel = player.getInLevel();
   
   // the crowd noise increases faster if there is noise than it
   // decreases when there is not
@@ -165,7 +171,7 @@ void draw() {
   } else {
     crowd -= 0.001;
   }
-  checkLightLevel(crowd);
+  checkLightLevel(inLevel);
 }
 
 
@@ -189,14 +195,24 @@ public void controlEvent(ControlEvent theEvent) {
 }
 
 void checkLightLevel(float level){
-  int lightlevel = int(level * 15);
-  println(binary(lightlevel));
+  if (sendDelay > 5){
+  int lightlevel = int(pow(2,round(level * 15))-1);
+  String tmp = binary(lightlevel,16);
+  
+  // because rich sucks in connecting lights in the right order
+  char[] outChar = shuffleString(tmp);
+  String out = new String(outChar);
+  communicator.serialSend(out);
+  sendDelay = 0; 
+  } else {
+    sendDelay++;
+  }
 }
 
 // This is called by the serial object that was created by TSerialCommunicator
 // We just forward it to the communicator and gather it's output
 void serialEvent (Serial serial){
-  communicator.serialEvent(serial);
+  communicator.serialEvent(serial); 
   input = int(communicator.getActivity() * 100);
 }
 
@@ -210,6 +226,22 @@ void keyPressed() {
 // Shut down the application and close the minim framework (IMPORTANT!)
 void stop() {
   // always close Minim audio classes when you are done with them
-  player.stop();
+  player.shutdown();
   super.stop();
+}
+
+
+// resort the string because the LEDs are connected in a strange order
+char[] shuffleString(String input){
+  char[] output = {'0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'};
+  for (int i=0; i<5; i++){
+    if (input.charAt(1+i) > '0') {
+      output[9-i] = input.charAt(1+i);
+    } else if ( input.charAt(6+i) > '0') {
+      output[4-i] = input.charAt(6+i); 
+    } else {
+      output[14-i] = input.charAt(11+i);
+    } 
+  }
+  return output;
 }

@@ -59,7 +59,6 @@ public class TSerialCommunicator {
 	}
 	
 	public void serialSend (String msg){
-		 msg = msg + '\n';
 		 this.port.write(msg);
 	}
 
