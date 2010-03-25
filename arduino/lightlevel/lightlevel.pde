@@ -17,6 +17,9 @@ int dataPin = 11;
 int higher[] = {0,4,8,16,32,64,0,0,0,0,0,0,0,0,1,2};
 int lower[] = {0,0,0,0,0,0,1,2,4,8,16,32,64,128,0,0}; 
 
+int serialIn[16];
+int serialIndex=0;
+
 void setup() {
   //Start Serial for debuging purposes	
   Serial.begin(9600);
@@ -31,33 +34,19 @@ void setup() {
 
 void loop() {
   //count up routine
-  
-  if (Serial.available() > 0) {
+  if (Serial.available()>0) {
     // read the incoming byte:
-    
-    int resultHigher = 0;
-    int resultLower = 0;
-    
-    for (int i=0; i < 8; i++){
-      int inRead = Serial.read() - '0';
-      if (inRead > 0){
-        resultHigher += 1 << (i);
+    while((Serial.available()>0)){
+      char in = Serial.read() - '0';
+      serialIn[serialIndex]=in;
+      serialIndex++;
+      if (serialIndex >= 16){
+        gotMessage();
+        Serial.flush();
+        serialIndex=0;        
       }
     }
-    
-    for (int i=0; i < 8; i++){
-      int inRead = Serial.read() - '0';
-      if (inRead > 0){
-        resultLower += 1 << (i);
-      }
-    }
-    
-    digitalWrite(latchPin, 0);
-    shiftOut(dataPin, clockPin, resultLower); 
-    shiftOut(dataPin, clockPin, resultHigher);
-    digitalWrite(latchPin, 1);  
   }
-  delay(1000);
 }
 
 void shiftOut(int myDataPin, int myClockPin, byte myDataOut) {
@@ -104,4 +93,28 @@ void shiftOut(int myDataPin, int myClockPin, byte myDataOut) {
 
   //stop shifting
   digitalWrite(myClockPin, 0);
+}
+
+int gotMessage(){
+  int resultHigher=0;
+  int resultLower=0;
+  
+  for (int i=0; i < 8; i++){
+    int inRead = serialIn[i];
+    if (inRead > 0){
+      resultHigher += 1 << (i);
+    }
+  }
+    
+  for (int j=8; j < 16; j++){
+    int inRead = serialIn[j];
+     if (inRead > 0){
+        resultLower += 1 << (j-8);
+      }
+    }    
+    digitalWrite(latchPin, 0);
+    shiftOut(dataPin, clockPin, resultLower); 
+    shiftOut(dataPin, clockPin, resultHigher);
+    digitalWrite(latchPin, 1);
+    return 1;
 }
