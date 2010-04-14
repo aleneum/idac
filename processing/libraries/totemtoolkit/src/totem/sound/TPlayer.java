@@ -59,13 +59,17 @@ public class TPlayer {
 		return this.in.left.level();
 	}
 	
+	public float getOutLevel(){
+		return this.player.mix.level();
+	}
+	
 	/**
 	 * Returns if a beat is detected right now or not. Right now the implementation
 	 * just includes lower pitch beat detection and has to be called manually.
 	 * @return
 	 */
 	public boolean beatDetected(){
-		return beat.isKick();
+		return (beat.isHat() || beat.isKick() || beat.isSnare());
 	};
 
 	/**

@@ -14,6 +14,7 @@ public class TMotionDetection {
 	
 	// threshold that determines when movement is detected
 	int threshold;
+	int motion;
 	
 	/**
 	 * Initialize the TMotionDetection object and set the threshold.S
@@ -43,7 +44,7 @@ public class TMotionDetection {
 	 * @return Image
 	 */
 	public int[] detectMotion(PApplet parent, PImage prev, PImage next) {
-		
+		motion = 0;
 		// create a new PImage to be filled and returned later.
 		PImage returnImage = new PImage(next.width,next.height);
 		
@@ -71,6 +72,7 @@ public class TMotionDetection {
 				if (diff > threshold) {
 					// If motion, display black
 					returnImage.pixels[loc] = parent.color(0);
+					motion++;
 				} else {
 					// If not, display white
 					returnImage.pixels[loc] = parent.color(255);
@@ -78,5 +80,9 @@ public class TMotionDetection {
 			}
 		}
 		return returnImage.pixels;
+	}
+
+	public int getMotion() {
+		return motion;
 	}
 }

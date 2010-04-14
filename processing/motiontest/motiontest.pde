@@ -37,8 +37,9 @@ void draw() {
   loadPixels();
   video.loadPixels();
   prevFrame.loadPixels();
-  
+    
   int[] pix = detection.detectMotion(this,prevFrame,video);
+    
   arraycopy(pix,pixels);
   updatePixels();
 }

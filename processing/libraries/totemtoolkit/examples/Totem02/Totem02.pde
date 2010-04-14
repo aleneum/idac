@@ -6,14 +6,20 @@
 import controlP5.*;
 import ddf.minim.*;
 import processing.serial.*;
+import fullscreen.*; 
+import codeanticode.gsvideo.*; //LINUX
+//import processing.video.*; // MAC + WIN
 
 import totem.comm.*;
 import totem.sound.*;
 import totem.visual.*;
 import totem.img.*;
 
-import fullscreen.*;  
+GSCapture video; // LINUX
+//Capture video; // MAC + WIN
 
+// Totem library objects
+TMotionDetection detection;
 TPlayer player;
 TSerialCommunicator communicator;
 
@@ -37,6 +43,8 @@ public final String INPUT_CONTROLLER = "Input (%)";
 public final String DECAY_CONTROLLER = "Speed (rel)";
 public final String MIC_CONTROLLER = "Mic (rel)";
 public final String CROWD_CONTROLLER = "Noise (rel)";
+public final String MOTION_CONTROLLER = "Motion";
+public final String LEVEL_CONTROLLER = "Level";
 
 // size of the window to show
 public final int sizeX = 600;
@@ -48,6 +56,12 @@ public int gain = 0;
 public float tension = 0;
 // crowd is the actual noise
 public float crowd = 0;
+
+//motion detected by camera
+public int motion = 0;
+public PImage prevFrame;
+public float threshold = 150;
+
 // decay defines the decay of tension
 public float decay = 0.5; 
 // serial input 
@@ -55,15 +69,19 @@ public int input = 0;
 // toggles the gui
 public boolean showGUI=true;
 // textColor is a brightness value for the text to show
-int textColor = 0;
+public int bgColor = 0;
 // defines the increase or decrease of the tension in the next loop
 public float tensionAcc = 0;
-// micro in level
-public float inLevel = 0;
 
-//delay for sending msgs
-int sendDelay = 0;
 
+//shows actual level
+int level = 0;
+
+// images to show the symbols;
+PImage noisePic;
+PImage crowdPic;
+PImage smilePic;
+PImage dancePic;
 
 void setup() {
   //Setup size of the screen
@@ -78,9 +96,11 @@ void setup() {
   controlp5.addSlider(MIC_CONTROLLER,0,1,0,10,55,100,14).setId(4);
   
   // and number boxes on the right
-  controlp5.addNumberbox(TENSION_CONTROLLER, tension, width-110, 10, 100,14).setId(20);
-  controlp5.addSlider(CROWD_CONTROLLER, 0, 1, crowd, width-110, 25, 100,14).setId(21);
-
+  controlp5.addNumberbox(TENSION_CONTROLLER, tension, width-130, 10, 100,14).setId(20);
+  controlp5.addNumberbox(CROWD_CONTROLLER, crowd, width-130, 40, 100,14).setId(21);
+  controlp5.addNumberbox(MOTION_CONTROLLER, motion, width-130, 70, 100,14).setId(22);
+  controlp5.addNumberbox(LEVEL_CONTROLLER, level, width-130, 100, 100,14).setId(22);
+    
   // Initialize and start the audio playback. Starts the microphone input as well. 
   player = new TPlayer(this,"groove.mp3");
   // Song is played in a loop yipeeh :D.
@@ -94,8 +114,8 @@ void setup() {
   communicator = new TSerialCommunicator(this);
   
   // create the font to be used for outputting text
-  myFont = createFont("FFScala", 32);
-  textFont(myFont);
+  //myFont = createFont("FFScala", 32);
+  //textFont(myFont);
   textAlign(CENTER);
   
   // fullscreen is now available and can be toggled with
@@ -103,26 +123,43 @@ void setup() {
   // Linux: Ctrl+F
   // OS X: ⌘+F
   // ESC: leave fullscreen / exit application
-  fs = new FullScreen(this); 
+  //fs = new FullScreen(this); 
+  
+  // load pictures
+  noisePic = loadImage("noise.png");
+  crowdPic = loadImage("growd.png");
+  smilePic = loadImage("smile.png");
+  dancePic = loadImage("dance.png");
+  
+  //Motion detection
+  detection = new TMotionDetection();
+  video = new GSCapture(this, 320, 240); // LINUX
+  //video = new Capture(this, width, height); // MAC + WIN
+  prevFrame = createImage(video.width,video.height,RGB);
 }
 
 void draw() {
-  
-  // set background color to black and fill color to white
   background(0);
-  fill(255);
+  image(smilePic, 150, 120);
+  // set background color to black and fill color to white
+
+  if (bgColor > 0) {
+    bgColor-=20;
+  } 
+  if (bgColor < 0){
+    bgColor = 0;
+  }
+  
+  fill(bgColor);
+  rect(20,460,560,60);
+  
+  // check the microphone input from the player object
+  float inLevel = player.getInLevel();
   
   // if a beat was detected by the player object we update the visualization...
   if (player.beatDetected()){
-  	currentVis.kick();
+  	bgColor = 255;
   }
-  
-  // ... and draw it afterwards
-  currentVis.draw();
-  
-  // and the text with the actual crowd value. This influences the text that will
-  // be written.
-  simpleText.draw(crowd);
   
   // is showGUI true we draw the GUI. Otherwise it's hidden.
   if(showGUI) {
@@ -130,8 +167,10 @@ void draw() {
   	controlp5.controller(TENSION_CONTROLLER).setValue(tension);
   	controlp5.controller(CROWD_CONTROLLER).setValue(crowd);
   	controlp5.controller(INPUT_CONTROLLER).setValue(input);
-  	controlp5.controller(MIC_CONTROLLER).setValue(inLevel);  
-    controlp5.draw();
+  	controlp5.controller(MIC_CONTROLLER).setValue(inLevel);
+        controlp5.controller(MOTION_CONTROLLER).setValue(motion);
+        controlp5.controller(LEVEL_CONTROLLER).setValue(level);
+        controlp5.draw();
   }
    
   // If there is a difference between input and tension (positive or negative)
@@ -159,19 +198,36 @@ void draw() {
      tensionAcc = 0;
    }
   }
+  
+  // adjust volume if the output
   player.setGain(gain);
-
-  // check the microphone input from the player object
-  inLevel = player.getInLevel();
   
   // the crowd noise increases faster if there is noise than it
   // decreases when there is not
-  if (crowd < inLevel) {
-    crowd += 0.005; 
-  } else {
-    crowd -= 0.001;
+  //if (crowd < inLevel) {
+  //  crowd += 0.005; 
+  //} else {
+  //  crowd -= 0.001;
+  //}
+  
+  checkLightLevel(crowd);
+  
+  
+  if (video.available()) {
+    // Save previous frame for motion detection!!
+    prevFrame.copy(video,0,0,video.width,video.height,0,0,video.width,video.height); // Before we read the new frame, we always save the previous frame for comparison!
+    prevFrame.updatePixels();
+    video.read();
   }
-  checkLightLevel(inLevel);
+  
+  loadPixels();
+  video.loadPixels();
+  prevFrame.loadPixels();
+    
+  int[] pix = detection.detectMotion(this,prevFrame,video);
+  motion = detection.getMotion();
+  //arraycopy(pix,pixels);
+  //updatePixels();
 }
 
 
@@ -195,24 +251,13 @@ public void controlEvent(ControlEvent theEvent) {
 }
 
 void checkLightLevel(float level){
-  if (sendDelay > 5){
-  int lightlevel = int(pow(2,round(level * 15))-1);
-  String tmp = binary(lightlevel,16);
-  
-  // because rich sucks in connecting lights in the right order
-  char[] outChar = shuffleString(tmp);
-  String out = new String(outChar);
-  communicator.serialSend(out);
-  sendDelay = 0; 
-  } else {
-    sendDelay++;
-  }
+  int lightlevel = int(level * 15);
 }
 
 // This is called by the serial object that was created by TSerialCommunicator
 // We just forward it to the communicator and gather it's output
 void serialEvent (Serial serial){
-  communicator.serialEvent(serial); 
+  communicator.serialEvent(serial);
   input = int(communicator.getActivity() * 100);
 }
 
@@ -220,6 +265,12 @@ void serialEvent (Serial serial){
 void keyPressed() {
   if (key == 'm' || key == 'M') {
     showGUI = !showGUI;
+    println("M pressed: " + showGUI);
+  } else if (key == 'l' || key == 'L'){
+    level++;
+    if (level > 5) {
+      level = 0;
+    }
   }
 }
 
@@ -228,20 +279,4 @@ void stop() {
   // always close Minim audio classes when you are done with them
   player.shutdown();
   super.stop();
-}
-
-
-// resort the string because the LEDs are connected in a strange order
-char[] shuffleString(String input){
-  char[] output = {'0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'};
-  for (int i=0; i<5; i++){
-    if (input.charAt(1+i) > '0') {
-      output[9-i] = input.charAt(1+i);
-    } else if ( input.charAt(6+i) > '0') {
-      output[4-i] = input.charAt(6+i); 
-    } else {
-      output[14-i] = input.charAt(11+i);
-    } 
-  }
-  return output;
 }
