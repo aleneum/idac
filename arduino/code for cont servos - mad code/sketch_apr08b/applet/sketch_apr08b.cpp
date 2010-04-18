@@ -11,6 +11,9 @@
 // Most servos are analog devices so the exact null point may vary somewhat device to device.
 // This is particularly true of continuous rotation servos.
 
+#include "WProgram.h"
+void setup();
+void loop();
 void setup(){
   pinMode(9,OUTPUT);
   pinMode(10,OUTPUT);
@@ -40,4 +43,17 @@ void loop(){
   servo1control = servo1null;
   delay(3000);
 } 
+
+
+int main(void)
+{
+	init();
+
+	setup();
+    
+	for (;;)
+		loop();
+        
+	return 0;
+}
 
