@@ -95,7 +95,7 @@ void setup() {
   controlp5 = new ControlP5(this);
   //sliders on the left side
   controlp5.addSlider(VOLUME_CONTROLLER,-50,50,0,10,10,100,14).setId(1);
-  controlp5.addSlider(INPUT_CONTROLLER,0,100,input,10,25,100,14).setId(2);
+  controlp5.addSlider(INPUT_CONTROLLER,0,150,input,10,25,100,14).setId(2);
   controlp5.addSlider(DECAY_CONTROLLER,0,1,decay,10,40,100,14).setId(3);
   controlp5.addSlider(MIC_CONTROLLER,0,1,0,10,55,100,14).setId(4);
   
@@ -106,7 +106,7 @@ void setup() {
   controlp5.addNumberbox(LEVEL_CONTROLLER, level, width-130, 100, 100,14).setId(23);
     
   // Initialize and start the audio playback. Starts the microphone input as well. 
-  player = new TPlayer(this,"groove.mp3");
+  player = new TPlayer(this,"../data/groove.mp3");
   // Song is played in a loop yipeeh :D.
   player.loop();
   
@@ -222,14 +222,6 @@ void draw() {
     video.read();
   }
   
-  loadPixels();
-  video.loadPixels();
-  prevFrame.loadPixels();
-    
-  int[] pix = detection.detectMotion(this,prevFrame,video);
-  motion = detection.getMotion();
-  //arraycopy(pix,pixels);
-  //updatePixels();
   delay(10);
 }
 
@@ -261,7 +253,7 @@ void checkLightLevel(float level){
 // We just forward it to the communicator and gather it's output
 void serialEvent (Serial serial){
   communicator.serialEvent(serial);
-  input = int(communicator.getActivity() * 100);
+  input = int(communicator.getActivity());
 }
 
 // Button m toggles the GUI on or off.
@@ -322,32 +314,43 @@ void drawMotion(){
 
   motion = float(currentMotion) / maxMotion;
   
-  fill(color(0,255,0));
-  if (motion > 0.1) {
-    ellipse(550, 400, 45, 45); 
+  int litLights = int(motion * 15);
+  StringBuffer buf = new StringBuffer("0000000000000000");
+  
+  
+  if (level >= 3){
+    if (player.beatDetected()){
+      buf.setCharAt(0,'1');
+    }
+  } else if (level >= 1) {
+    buf.setCharAt(0,'1');
   }
   
-  if (motion > 0.2) {
-    ellipse(550, 350, 45, 45); 
+  for (int i = 15; i >= (15-litLights); i--){
+    buf.setCharAt(i,'1');
   }
-  
-  if (motion > 0.3) {
-    ellipse(550, 300, 45, 45); 
-  }
-  
-  if (motion > 0.5) {
-    ellipse(550, 250, 45, 45); 
-  }
-  
-  if (motion > 0.7) {
-    ellipse(550, 200, 45, 45); 
-  }
-  
-  if (motion > 0.9) {
-    ellipse(550, 150, 45, 45); 
-  }
-  
+  String out = "l"+shuffleString(buf.toString());
+  communicator.serialSend(out);  
 }
+
+String shuffleString(String input){
+  char[] output = {'0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'};
+  for (int i=0; i<5; i++){
+    if (input.charAt(1+i) > '0') {
+      output[9-i] = input.charAt(1+i);
+    } else if ( input.charAt(6+i) > '0') {
+      output[4-i] = input.charAt(6+i); 
+    } else {
+      output[14-i] = input.charAt(11+i);
+    } 
+  }
+  
+  output[15] = input.charAt(0);
+  
+  return new String(output);
+}
+
+
 
 void showLightBar(){
   if (bgColor > 0) {
@@ -368,7 +371,8 @@ void showLightBar(){
 void showNoise(){
    fill(color(0,255,255));
    int bw = int(inLevel*400);
-   rect(20, 423-bw, 40, bw);  
+   rect(20, 423-bw, 40, bw);
+   rect(width-60, 423-bw, 40, bw);
 }
 
 // Shut down the application and close the minim framework (IMPORTANT!)

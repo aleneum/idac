@@ -32,7 +32,8 @@ public class TPlayer {
 		this.player = this.minim.loadFile(file, 2048);
 		this.in = minim.getLineIn(Minim.STEREO, 512);
 		beat = new BeatDetect(player.bufferSize(), player.sampleRate());
-		beat.setSensitivity(300);
+		beat.detectMode(BeatDetect.FREQ_ENERGY);
+		beat.setSensitivity(500);
 		bl = new TBeatListener(beat, player);
 	}
 	
@@ -69,7 +70,7 @@ public class TPlayer {
 	 * @return
 	 */
 	public boolean beatDetected(){
-		return (beat.isHat() || beat.isKick() || beat.isSnare());
+		return (beat.isRange(4,10,2));
 	};
 
 	/**

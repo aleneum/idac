@@ -1,25 +1,25 @@
- unsigned long echo = 0;
- int ultraSoundSignal = 2; // Ultrasound signal pin
- unsigned long ultrasoundValue = 0;
- int relayPin1 = 6;
-int relayPin2 = 7;
-int soundIn = 2;
-int val = 0;
 
- void setup()
- {
- Serial.begin(9600);
- pinMode(ultraSoundSignal,OUTPUT);
+ unsigned long echo = 0;
+ 
+ int ultraSoundSignal = 2; // Ultrasound signal pin
+ int relayPin1 = 3;
+ int relayPin2 = 4;
+ 
+ unsigned long ultrasoundValue = 0;
+ int val = 0;
+
+ void setup() {
+   Serial.begin(9600);
+   pinMode(ultraSoundSignal,OUTPUT);
    pinMode(relayPin1, OUTPUT);
-  pinMode(relayPin2, OUTPUT);
-  pinMode(soundIn, INPUT);
+   pinMode(relayPin2, OUTPUT);
  }
 
  unsigned long ping(){
- pinMode(ultraSoundSignal, OUTPUT); // Switch signalpin to output
- digitalWrite(ultraSoundSignal, LOW); // Send low pulse
- delayMicroseconds(2); // Wait for 2 microseconds
- digitalWrite(ultraSoundSignal, HIGH); // Send high pulse
+   pinMode(ultraSoundSignal, OUTPUT); // Switch signalpin to output
+   digitalWrite(ultraSoundSignal, LOW); // Send low pulse
+   delayMicroseconds(2); // Wait for 2 microseconds
+   digitalWrite(ultraSoundSignal, HIGH); // Send high pulse
  delayMicroseconds(5); // Wait for 5 microseconds
  digitalWrite(ultraSoundSignal, LOW); // Holdoff
  pinMode(ultraSoundSignal, INPUT); // Switch signalpin to input
