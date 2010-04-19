@@ -187,9 +187,11 @@ void draw() {
    }
   }
   
-  if (tension < 0.1) {
+  if ((tension < 0.2) && (input > 100)){
+    level = 0;
+  } else if (tension < 0.2) {
     level = 1;
-  } else if (tension < 0.3) {
+  } else if (tension < 0.4) {
     level = 2;
   } else if (tension <0.5) {
     level = 3; 

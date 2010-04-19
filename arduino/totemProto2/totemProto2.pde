@@ -182,5 +182,6 @@ void checkDistance(){
   if (millis() - lastChecked > 1000) {
     int distance = ping();
     lastChecked = millis();
+    Serial.println(distance);
   }
 }
