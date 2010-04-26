@@ -37,6 +37,17 @@ public class TPlayer {
 		bl = new TBeatListener(beat, player);
 	}
 	
+	/** Returns the audio input source offered by minim. 
+	 * 
+	 */
+	public AudioInput getInput(){
+		return this.in;
+	};
+	
+	public void setSensitivity(int sens){
+		this.beat.setSensitivity(sens);
+	}
+	
 	/**
 	 * Starts playing the actual song in a loop.
 	 */

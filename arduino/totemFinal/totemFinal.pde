@@ -1,11 +1,19 @@
 //Pin connected to ST_CP of 74HC595
-int latchPin = 8;
-//Pin connected to SH_CP of 74HC595
+
+int topPin = 8;
+
+int noiseLeftPin = 4;
+int getMoreLeftPin = 3;
+int danceLeftPin = 2;
+
+int noiseRightPin = 7; 
+int getMoreRightPin = 6;  
+int danceRightPin = 5;
+
+int latchPin = 10;
 int clockPin = 12;
-////Pin connected to DS of 74HC595
 int dataPin = 11;
 
-int serialIn[32];
 int serialIndex=0;
 
 const int LIGHT_MODE = 1;
@@ -13,6 +21,8 @@ const int VOLUME_MODE = 2;
 const int SYMBOL_MODE = 3;
 const int MOTOR_MODE = 4;
 const int ENABLE_MODE = 5;
+const int TOP_MODE = 6;
+
 const int IDLE_MODE = 0;
 
 const int LIGHT_LENGTH = 15;
@@ -20,18 +30,35 @@ const int VOLUME_LENGTH = 5;
 const int SYMBOL_LENGTH = 3;
 const int MOTOR_LENGTH = 3;
 const int ENABLE_LENGTH = 2;
+const int TOP_LENGTH = 1;
 
 int lightState[LIGHT_LENGTH];
+int lightTmp[LIGHT_LENGTH];
+
 int volumeState[VOLUME_LENGTH];
+int volumeTmp[VOLUME_LENGTH];
+
 int symbolState[SYMBOL_LENGTH];
+int symbolTmp[SYMBOL_LENGTH];
+
 int motorState[MOTOR_LENGTH];
+int motorTmp[MOTOR_LENGTH];
+
 int enableState[ENABLE_LENGTH];
+int enableTmp[ENABLE_LENGTH];
+
+int topState[TOP_LENGTH];
+int topTmp[TOP_LENGTH];
 
 int mode = IDLE_MODE;
 
 int count = 0;
 
 void setup() {
+  
+  for (int i = 0; i < 14; i++){
+    pinMode(i,OUTPUT);
+  }
   
   //Start Serial for debuging purposes	
   Serial.begin(9600);
@@ -49,8 +76,13 @@ void setup() {
 void loop() {
   //count up routine
   if (Serial.available()>0) {
-    char in = Serial.read() - '0';
-    if (mode == IDLE_MODE) {
+    char in = Serial.read();
+    if (mode != IDLE_MODE) {
+      if ((in != '0') && (in != '1')){
+        mode = LIGHT_MODE;
+        serialIndex = 0;
+      }
+    } else {
       switch(mode) {
         case 'l':  mode = LIGHT_MODE;
                    serialIndex = 0;
@@ -67,43 +99,71 @@ void loop() {
         case 'e':  mode = ENABLE_MODE;
                    serialIndex = 0;
                    break;
+        case 't':  mode = TOP_MODE;
+                   serialIndex = 0;
+                   break;
         case 'b':  beatMessage();
-                   break;  
-         
+                   break;
       }
-    } else if (mode == LIGHT_MODE) {
-      serialIn[serialIndex]=in;
+    }
+    if (mode == LIGHT_MODE) {
+      lightTmp[serialIndex]=in - '0';
       serialIndex++;
       if (serialIndex >= LIGHT_LENGTH){
-        lightMessage();
+        for (int i=0; i < LIGHT_LENGTH; i++) {
+          lightState[i] = lightTmp[i];
+        }
+        updateShift();
         mode = IDLE_MODE;       
       }
     } else if (mode == VOLUME_MODE) {
-      serialIn[serialIndex]=in;
+      volumeTmp[serialIndex]=in - '0';
       serialIndex++;
       if (serialIndex >= VOLUME_LENGTH){
-        volumeMessage();
-        mode = IDLE_MODE;        
+        for (int i=0; i < VOLUME_LENGTH; i++) {
+          volumeState[i] = volumeTmp[i];
+        }
+        updateShift();
+        mode = IDLE_MODE;
       }
     } else if (mode == SYMBOL_MODE) {
-      serialIn[serialIndex]=in;
+      symbolTmp[serialIndex]=in - '0';
       serialIndex++;
       if (serialIndex >= SYMBOL_LENGTH){
+        for (int i=0; i < SYMBOL_LENGTH; i++) {
+          symbolState[i] = symbolTmp[i];
+        }
         symbolMessage();
         mode = IDLE_MODE;        
       }
     } else if (mode == MOTOR_MODE) {
-      serialIn[serialIndex]=in;
+      motorTmp[serialIndex]=in - '0';
       serialIndex++;
       if (serialIndex >= MOTOR_LENGTH){
-        motorMessage();
+        for (int i=0; i < MOTOR_LENGTH; i++) {
+          motorState[i] = motorTmp[i];
+        }
+        updateShift();
         mode = IDLE_MODE;        
       }
     } else if (mode == ENABLE_MODE) {
-      serialIn[serialIndex]=in;
+      enableTmp[serialIndex]=in - '0';
       serialIndex++;
       if (serialIndex >= ENABLE_LENGTH){
-        enableMessage();
+        for (int i=0; i < ENABLE_LENGTH; i++) {
+          enableState[i] = enableTmp[i];
+        }
+        updateShift();
+        mode = IDLE_MODE;        
+      }
+    } else if (mode == TOP_MODE) {
+      topTmp[serialIndex]=in - '0';
+      serialIndex++;
+      if (serialIndex >= TOP_LENGTH){
+        for (int i=0; i < TOP_LENGTH; i++) {
+          topState[i] = topTmp[i];
+        }
+        topMessage();
         mode = IDLE_MODE;        
       }
     }
@@ -156,11 +216,32 @@ void shiftOut(int myDataPin, int myClockPin, byte myDataOut) {
   digitalWrite(myClockPin, 0);
 }
 
-int gotMessage(){
+int updateShift(){
   int resultHighest=0;
   int resultHigher=0;
   int resultLower=0;
   int resultLowest=0;
+  
+  int serialIn[32];
+  
+  for (int i=0; i < 15; i++) {
+    serialIn[i] = lightState[i];
+  }
+  
+  for (int i=15; i < 20; i++) {
+    serialIn[i] = volumeState[i - 15];
+  }
+  
+  for (int i=20; i < 23; i++) {
+    serialIn[i] = motorState[i - 20];
+  }
+   
+  serialIn[23] = enableState[0];
+  serialIn[24] = enableState[1];
+   
+  for (int i=25; i < 32; i++){
+    serialIn[i] = 0;
+  }
   
   for (int i=0; i < 8; i++){
     int inRead = serialIn[i];
@@ -169,32 +250,57 @@ int gotMessage(){
     }
   }
     
-    for (int i=8; i < 16; i++){
-      int inRead = serialIn[i];
-      if (inRead > 0){
-        resultHigher += 1 << (i-8);
-      }
+  for (int i=8; i < 16; i++){
+    int inRead = serialIn[i];
+    if (inRead > 0){
+      resultHigher += 1 << (i-8);
     }
+  }
     
-    for (int i=16; i < 24; i++){
-      int inRead = serialIn[i];
-      if (inRead > 0){
-        resultLower += 1 << (i-16);
-      }
+  for (int i=16; i < 24; i++){
+    int inRead = serialIn[i];
+    if (inRead > 0){
+      resultLower += 1 << (i-16);
     }
-    
-    for (int i=24; i < 32; i++){
-      int inRead = serialIn[i];
-      if (inRead > 0){
-        resultLowest += 1 << (i-24);
-      }
+  }
+     
+  for (int i=24; i < 32; i++){
+    int inRead = serialIn[i];
+    if (inRead > 0){
+      resultLowest += 1 << (i-24);
     }
+  }
 
-    digitalWrite(latchPin, 0);
-    shiftOut(dataPin, clockPin, resultLowest); 
-    shiftOut(dataPin, clockPin, resultLower);
-    shiftOut(dataPin, clockPin, resultHigher);
-    shiftOut(dataPin, clockPin, resultHighest);
-    digitalWrite(latchPin, 1);
-    return 1;
+  digitalWrite(latchPin, 0);
+  shiftOut(dataPin, clockPin, resultLowest); 
+  shiftOut(dataPin, clockPin, resultLower);
+  shiftOut(dataPin, clockPin, resultHigher);
+  shiftOut(dataPin, clockPin, resultHighest);
+  digitalWrite(latchPin, 1);
+  return 1;
+}
+
+void symbolMessage(){
+  for (int i=0; i < SYMBOL_LENGTH; i++){
+    if (symbolState[i] == 1){
+      digitalWrite(danceLeftPin + i, HIGH);
+      digitalWrite(danceRightPin + i , HIGH);
+    } else {
+      digitalWrite(danceLeftPin + i, LOW);
+      digitalWrite(danceRightPin + i, LOW);
+    }
+  }  
+}
+
+void beatMessage(){
+  Serial.println("beatMessage : not implemented yet");
+  exit(-1);
+}
+
+void topMessage(){
+  if (topState[0] == 1){
+    digitalWrite(topPin, HIGH);
+  } else {
+    digitalWrite(topPin, LOW);
+  }
 }
