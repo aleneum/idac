@@ -4,8 +4,8 @@ import codeanticode.gsvideo.*; //LINUX
 
 public class MotionHandeling {
   public static final float MOTION_LIMIT = 0.4;
-  public static final float MOTION_INCREASE = 0.01;
-  public static final float MOTION_DECREASE = 0.001;
+  public static final float MOTION_INCREASE = 0.005;
+  public static final float MOTION_DECREASE = 0.0005;
   
   PApplet parent;
   

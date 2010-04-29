@@ -1,5 +1,13 @@
 package totem.sound;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Observer;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 import processing.core.PApplet;
 import ddf.minim.AudioInput;
 import ddf.minim.AudioPlayer;
@@ -15,10 +23,12 @@ import ddf.minim.analysis.BeatDetect;
  */
 public class TPlayer {
 	Minim minim;
-	AudioPlayer player;
 	AudioInput in;
+	AudioPlayer player;
 	BeatDetect beat;
 	TBeatListener bl;
+	TPlayerThread runnable;
+	SongQueue songs;
 	
 	/**
 	 * Initialize the TPlayer object. the parent object is needed to initialize the
@@ -29,12 +39,17 @@ public class TPlayer {
 	 */
 	public TPlayer(PApplet parent, String file){
 		this.minim = new Minim(parent);
-		this.player = this.minim.loadFile(file, 2048);
 		this.in = minim.getLineIn(Minim.STEREO, 512);
-		beat = new BeatDetect(player.bufferSize(), player.sampleRate());
+		this.player = minim.loadFile(file);
+		
+		beat = new BeatDetect(this.player.bufferSize(), 44100.0f);
 		beat.detectMode(BeatDetect.FREQ_ENERGY);
-		beat.setSensitivity(500);
-		bl = new TBeatListener(beat, player);
+		beat.setSensitivity(1);
+		bl = new TBeatListener(beat, this.player);
+	}
+	
+	public SongQueue getSongs() {
+		return this.songs;
 	}
 	
 	/** Returns the audio input source offered by minim. 
@@ -43,18 +58,16 @@ public class TPlayer {
 	public AudioInput getInput(){
 		return this.in;
 	};
-	
-	public void setSensitivity(int sens){
-		this.beat.setSensitivity(sens);
-	}
-	
+
+	// TODO let this method break to eliminate calls
 	/**
 	 * Starts playing the actual song in a loop.
 	 */
-	public void loop(){
-		this.player.loop();	
+	public void play(){
+		this.player.loop();
 	}
 	
+	//TODO ganz machen
 	/**
 	 * Set the volume of the output.
 	 * @param gain the new gain volume
@@ -72,7 +85,7 @@ public class TPlayer {
 	}
 	
 	public float getOutLevel(){
-		return this.player.mix.level();
+		return this.player.left.level();
 	}
 	
 	/**
@@ -81,17 +94,59 @@ public class TPlayer {
 	 * @return
 	 */
 	public boolean beatDetected(){
-		return (beat.isRange(4,10,2));
+		boolean is = this.beat.isKick();
+		return is;
 	};
 
+	
+	public byte[] loadSample(String fileString) {
+		AudioInputStream ain;
+		File file = new File(fileString);
+		byte bs[] = new byte[0];
+		try {
+			ain = AudioSystem.getAudioInputStream(file);
+			// How long, in *samples*, is the file?
+			long len = ain.getFrameLength();
+
+			// 16-bit audio means 4 bytes per sample, so we need
+			// a byte array twice as long as the number of samples
+			bs = new byte[(int) len * 4];
+
+			// Read everything, and make sure we got it all
+			int r = ain.read(bs);
+			if (r != len * 4)
+				throw new RuntimeException("Read only " + r + " of " + file
+						+ " out of " + (len * 4) + " sound bytes");
+		} catch (UnsupportedAudioFileException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("could not load " + file.getAbsolutePath());
+			e.printStackTrace();
+		}
+		return bs;
+	}
+	
+	//TODO ganz machen
 	/**
 	 * Shut down the TPlayer. This method stops the song and shut down the minim 
 	 * framework. It should be called if the application is terminated to avoid locks
 	 * of the audio channels.
 	 */
 	public void shutdown(){
-		  player.close();
+		  //player.close();
 		  in.close();
 		  minim.stop();
+	}
+	
+	public void addAudioObserver(Observer o){
+		this.player.addAudioObserver(o);
+	}
+	
+	public void addToQueue(String file){
+		byte[] sample = this.loadSample(file);
+		if (sample.length > 0){
+			this.player.getPlayList().add(sample);
+		}		
 	}
 }

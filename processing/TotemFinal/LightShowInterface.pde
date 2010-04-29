@@ -87,7 +87,6 @@ public class LightShowColorBar implements LightShowInterface {
   
   public void beatDetected(){
     currentColor = (String) colors.get(floor(random(3)));
-    println ("new Color: " + currentColor);
   }
   
   public void reset(){
@@ -241,5 +240,56 @@ public class LightShowRainbow implements LightShowInterface{
       return current;
     }
    
-} 
+}
+
+public class LightShowShutDown implements LightShowInterface{
+    
+    ArrayList colors;
+    LightState current;
+    Iterator iterator;
+    int stepCount;
+    String currentColor;
+    
+    public LightShowShutDown(){
+      currentColor = LightState.BLUE;
+      current = new LightStateMono(LightState.WHITE);  
+      colors = new ArrayList();
+      colors.add(LightState.RED);
+      colors.add(LightState.BLUE);
+      colors.add(LightState.GREEN);
+      colors.add(LightState.YELLOW);
+      colors.add(LightState.MAGENTA);
+      colors.add(LightState.CYAN);
+      iterator = colors.iterator();
+    }
+    
+    public void beatDetected(){}
+    
+    public void reset(){
+      current = new LightStateMono(LightState.BLACK);
+    }
+    
+    public LightState getNextState(TotemState state){
+      if (!iterator.hasNext()){
+        iterator = colors.iterator();
+      }
+      
+      if (stepCount > 60) {
+          currentColor = (String) iterator.next();
+          stepCount = 0;
+          current = new LightStateMono(LightState.BLACK);
+        } else if (stepCount > 50) { 
+          current = new LightStateMono(currentColor);
+          stepCount++;
+          return current; 
+      } else {
+        current = new LightStateMono(LightState.BLACK);
+      }
+      int light = floor(stepCount/10);
+      current.setLight(4-light,currentColor);
+      stepCount++;
+      return current;
+    }
+   
+}
 

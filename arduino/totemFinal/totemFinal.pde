@@ -1,4 +1,9 @@
 //Pin connected to ST_CP of 74HC595
+#include <Servo.h> 
+
+Servo servo;
+
+int index=0;
 
 int topPin = 8;
 
@@ -13,6 +18,12 @@ int danceRightPin = 5;
 int latchPin = 10;
 int clockPin = 12;
 int dataPin = 11;
+
+int motorEnable = 13;
+int motorUpPin = 14;
+int motorDownPin = 15;
+
+int servoPin = 16; 
 
 int serialIndex=0;
 
@@ -32,6 +43,11 @@ const int MOTOR_LENGTH = 3;
 const int ENABLE_LENGTH = 2;
 const int TOP_LENGTH = 1;
 
+const int MOTOR_MAX = 10;
+const int MOTOR_STEP_LENGTH = 100;
+
+const int SERVO_STOP = 1530;
+
 int lightState[LIGHT_LENGTH];
 int lightTmp[LIGHT_LENGTH];
 
@@ -43,6 +59,8 @@ int symbolTmp[SYMBOL_LENGTH];
 
 int motorState[MOTOR_LENGTH];
 int motorTmp[MOTOR_LENGTH];
+int motorStep = 0;
+
 
 int enableState[ENABLE_LENGTH];
 int enableTmp[ENABLE_LENGTH];
@@ -55,57 +73,38 @@ int mode = IDLE_MODE;
 int count = 0;
 
 void setup() {
+  servo.attach(servoPin);  
+  servo.writeMicroseconds(SERVO_STOP);
   
-  for (int i = 0; i < 14; i++){
+  for (int i = 0; i < 17; i++){
     pinMode(i,OUTPUT);
+    digitalWrite(i,LOW);
   }
   
   //Start Serial for debuging purposes	
   Serial.begin(9600);
   //set pins to output because they are addressed in the main loop
-  pinMode(latchPin, OUTPUT);
   
-  digitalWrite(latchPin, 0);
+  digitalWrite(motorEnable, HIGH);
+  digitalWrite(latchPin, LOW);
   shiftOut(dataPin, clockPin, 0); 
   shiftOut(dataPin, clockPin, 0);
   shiftOut(dataPin, clockPin, 0); 
   shiftOut(dataPin, clockPin, 0);
-  digitalWrite(latchPin, 1);
+  digitalWrite(latchPin, HIGH);
 }
 
 void loop() {
   //count up routine
-  if (Serial.available()>0) {
+ if (Serial.available()>0) {
     char in = Serial.read();
     if (mode != IDLE_MODE) {
       if ((in != '0') && (in != '1')){
-        mode = LIGHT_MODE;
+        mode = IDLE_MODE;
         serialIndex = 0;
       }
-    } else {
-      switch(mode) {
-        case 'l':  mode = LIGHT_MODE;
-                   serialIndex = 0;
-                   break;
-        case 'v':  mode = VOLUME_MODE;
-                   serialIndex = 0;
-                   break;
-        case 's':  mode = SYMBOL_MODE;
-                   serialIndex = 0;
-                   break;
-        case 'm':  mode = MOTOR_MODE;
-                   serialIndex = 0;
-                   break;
-        case 'e':  mode = ENABLE_MODE;
-                   serialIndex = 0;
-                   break;
-        case 't':  mode = TOP_MODE;
-                   serialIndex = 0;
-                   break;
-        case 'b':  beatMessage();
-                   break;
-      }
     }
+    
     if (mode == LIGHT_MODE) {
       lightTmp[serialIndex]=in - '0';
       serialIndex++;
@@ -166,8 +165,36 @@ void loop() {
         topMessage();
         mode = IDLE_MODE;        
       }
+    } else {
+      switch(in) {
+        case 'l':  mode = LIGHT_MODE;
+                   serialIndex = 0;
+                   break;
+        case 'v':  mode = VOLUME_MODE;
+                   serialIndex = 0;
+                   break;
+        case 's':  mode = SYMBOL_MODE;
+                   serialIndex = 0;
+                   break;
+        case 'm':  mode = MOTOR_MODE;
+                   serialIndex = 0;
+                   break;
+        case 'e':  mode = ENABLE_MODE;
+                   serialIndex = 0;
+                   break;
+        case 't':  mode = TOP_MODE;
+                   serialIndex = 0;
+                   break;
+        case 'b':  beatMessage();
+                   break;
+        default :  mode = IDLE_MODE;
+                   break;
+      }
     }
+    Serial.print("mode is ");    
+    Serial.println(mode);
   }
+  motorCheck();
 }
 
 void shiftOut(int myDataPin, int myClockPin, byte myDataOut) {
@@ -224,22 +251,22 @@ int updateShift(){
   
   int serialIn[32];
   
-  for (int i=0; i < 15; i++) {
+  for (int i=0; i < 6; i++) {
     serialIn[i] = lightState[i];
   }
   
-  for (int i=15; i < 20; i++) {
-    serialIn[i] = volumeState[i - 15];
+  for (int i=8; i < 17; i++){
+    serialIn[i] = lightState[i-2];
   }
   
-  for (int i=20; i < 23; i++) {
-    serialIn[i] = motorState[i - 20];
+  for (int i=17; i < 22; i++) {
+    serialIn[i] = volumeState[i - 17];
   }
+  
+  serialIn[25] = enableState[0];
+  serialIn[26] = enableState[1];
    
-  serialIn[23] = enableState[0];
-  serialIn[24] = enableState[1];
-   
-  for (int i=25; i < 32; i++){
+  for (int i=27; i < 32; i++){
     serialIn[i] = 0;
   }
   
@@ -293,8 +320,7 @@ void symbolMessage(){
 }
 
 void beatMessage(){
-  Serial.println("beatMessage : not implemented yet");
-  exit(-1);
+  // DO NOTHING
 }
 
 void topMessage(){
@@ -304,3 +330,23 @@ void topMessage(){
     digitalWrite(topPin, LOW);
   }
 }
+
+void motorCheck(){
+  if ((motorState[0] == 1) && (motorStep < MOTOR_MAX)){
+    motorStep++;
+    digitalWrite(motorUpPin, HIGH);
+    delay(MOTOR_STEP_LENGTH);
+    digitalWrite(motorUpPin, LOW);    
+  } else if ((motorState[1] ==1) && (motorStep > 0)){
+    motorStep--;
+    digitalWrite(motorDownPin, HIGH);
+    delay(MOTOR_STEP_LENGTH);
+    digitalWrite(motorDownPin, LOW);      
+  } 
+  if ((motorState[2]==1) && (motorStep == MOTOR_MAX)){
+    servo.writeMicroseconds(1510);    
+  } else {
+    servo.writeMicroseconds(SERVO_STOP);
+  }
+}
+

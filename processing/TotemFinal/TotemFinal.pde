@@ -35,7 +35,7 @@ public final String SONIC_IN = "Sonic Input";
 Controller controller;
 
 void setup(){
-    size(150,150);
+    size(300,600);
     // setup monitor
     p5 = new ControlP5(this);
     p5.addNumberbox(MOTION_LEFT  , 0, 10,  10, 50, 14).setId(1);
@@ -50,7 +50,7 @@ void setup(){
     state = new TotemState();
     
     //setup sound
-    TPlayer player = new TPlayer(this,"../data/groove.mp3");
+    TPlayer player = new TPlayer(this,"../data/silence.wav");
     input = new AudioInputHandeling(player.getInput());
     output = new AudioOutputHandeling(player);
 
@@ -62,9 +62,10 @@ void setup(){
     communicator = new TSerialCommunicator(this);
     controller = new Controller(communicator,model);
     
-    output.addEventListener(controller);
-    model.addEventListener(controller);
-
+    output.addObserver(controller);
+    model.addObserver(controller);
+    model.addObserver(output);
+    player.addAudioObserver(controller);
 }
 
 void draw(){
@@ -75,7 +76,7 @@ void draw(){
   p5.controller(LEVEL).setValue(model.getLevel());
   
   input.update();
-  output.update();
+  output.refresh();
   motion.update();
   
   // TODO adapt this system
@@ -85,15 +86,13 @@ void draw(){
  
   state.update(motion.getMotionLeft(), motion.getMotionRight(), motion.getInstantLeft(), motion.getInstantRight(), 
                model.getLevel(), false, input.getNoiseLevel(), input.getInputLevel(), output.getVolume(), sonic);
-  
+               
   controller.step(state);
-  
-  delay(100);
-  
+  delay(5);  
 }
 
 // This is called by the serial object that was created by TSerialCommunicator
-// We just forward it to the communicator and gather it's output
+// We just forward it to the communica tor and gather it's output
 void serialEvent (Serial serial){
   communicator.serialEvent(serial);
   sonic = int(communicator.getActivity());
