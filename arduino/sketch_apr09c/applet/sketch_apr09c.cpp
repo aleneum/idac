@@ -1,8 +1,8 @@
 #include "WProgram.h"
 void setup();
 void loop();
-int motorPin1 = 9;
-int motorPin2 = 10;
+int motorPin1 = 8;
+int motorPin2 = 9;
 int enablePin = 13;
 int Button1 = 2;
 int Button2 = 3;

@@ -1,5 +1,14 @@
 //Pin connected to ST_CP of 74HC595
 #include <Servo.h> 
+#include "WProgram.h"
+void setup();
+void loop();
+void shiftOut(int myDataPin, int myClockPin, byte myDataOut);
+int updateShift();
+void symbolMessage();
+void beatMessage();
+void topMessage();
+void motorCheck();
 Servo servo;
 
 int index=0;
@@ -217,7 +226,7 @@ void shiftOut(int myDataPin, int myClockPin, byte myDataOut) {
   digitalWrite(myDataPin, 0);
   digitalWrite(myClockPin, 0);
 
-  //for each bit in the byte myDataOut�
+  //for each bit in the byte myDataOut\ufffd
   //NOTICE THAT WE ARE COUNTING DOWN in our for loop
   //This means that %00000001 or "1" will go through such
   //that it will be pin Q0 that lights. 
@@ -357,5 +366,18 @@ void motorCheck(){
   } else {
     servo.writeMicroseconds(SERVO_STOP);
   }
+}
+
+
+int main(void)
+{
+	init();
+
+	setup();
+    
+	for (;;)
+		loop();
+        
+	return 0;
 }
 
