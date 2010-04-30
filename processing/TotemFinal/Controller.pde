@@ -36,6 +36,8 @@ class Controller implements Observer{
         }
       } else if (msg.equals(Model.LEVEL_CHANGED)) {
         levelChanged(model.getLevel());
+      } else if (msg.equals(Model.ENABLE_CHANGED)) {
+        this.sms.sendEnableMessage(model.getEnabledString());
       }
     } else {
       model.initNextLevel();
@@ -46,15 +48,12 @@ class Controller implements Observer{
     switch(level){
       case 0:   this.show = new LightShowOff();
                   model.setEnabled(false);
-                  this.sms.sendEnableMessage(Model.ENABLE_OFF);
                   break;
       case 1:   this.show = new LightShowSimpleBar();
                   model.setEnabled(true);
-                  this.sms.sendEnableMessage(Model.ENABLE_BOTH);
                   break;
       case 2:   this.show = new LightShowColorBar();
                   model.setEnabled(true);
-                  this.sms.sendEnableMessage(Model.ENABLE_BOTH);
                   break;
       case 3:   this.show = new LightShowClavilux();
                   this.sms.sendMotorMessage(Model.MOTOR_DOWN);
@@ -75,21 +74,11 @@ class Controller implements Observer{
   public void step(TotemState state){
     if (millis() > (lastStep + STEP_MILLIS)) {
       this.sms.sendLightLevelMessage(this.show.getNextState(state));
-      if (model.getLevel() >= 3 ){
-        if ((state.getMotionLeft() < Model.LEVEL03_LIMIT) || (state.getMotionRight() < Model.LEVEL03_LIMIT)){
-           if ((state.getMotionLeft() < Model.LEVEL03_LIMIT) && (model.isLeftEnabled())){
-             model.setLeftEnabled(false);
-             this.sms.sendEnableMessage(Model.ENABLE_RIGHT);
-           } else if (((state.getMotionRight() < Model.LEVEL03_LIMIT) && (model.isRightEnabled()))){
-             model.setRightEnabled(false);
-             this.sms.sendEnableMessage(Model.ENABLE_LEFT);
-           }
-        } else if(!model.isLeftEnabled() || !model.isRightEnabled()){
-            model.setEnabled(true);
-            this.sms.sendEnableMessage(Model.ENABLE_BOTH);
-        }
+      if ((model.getLevel() >= 3) && (model.getLevel() < 5) ){
+        this.model.setLeftEnabled(state.getMotionLeft() > Model.LEVEL03_LIMIT);
+        this.model.setRightEnabled(state.getMotionRight() > Model.LEVEL03_LIMIT);
+        lastStep = millis();
       }
-      lastStep = millis();
     }
   }
   

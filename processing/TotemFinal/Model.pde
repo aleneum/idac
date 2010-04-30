@@ -20,6 +20,7 @@ class Model extends Observable{
  
   public static final String LEVEL_CHANGED = "lvlch";
   public static final String LEVEL_NEXT = "lvlnxt";
+  public static final String ENABLE_CHANGED = "enblch";
   
   int level;
   int nextLevel;
@@ -38,7 +39,6 @@ class Model extends Observable{
   
   public void updateLevel(float motion, float sound, int sonic) {
     sound = 0.5;
-    motion = 1;
     if (!levelLock) {
       nextLevel = level;
       if ((motion < LEVEL02_LIMIT) && (sonic > 100)){
@@ -121,21 +121,42 @@ class Model extends Observable{
     return leftEnabled;
   }
     
-  public void setLeftEnabled(boolean bool){
-    this.leftEnabled = bool;
-  }
     
   public boolean isRightEnabled(){
     return rightEnabled;
   }
+  
+  public String getEnabledString(){
+    if (leftEnabled && rightEnabled) {
+      return Model.ENABLE_BOTH;
+    } else if (leftEnabled) {
+      return Model.ENABLE_LEFT;
+    } else if (rightEnabled) {
+      return Model.ENABLE_RIGHT;
+    } 
+    return ENABLE_OFF;
+  }
+    
+  public void setLeftEnabled(boolean bool){
+    if (bool != this.leftEnabled) {
+      this.leftEnabled = bool;
+      this.notifyObservers(new Event(Model.ENABLE_CHANGED,this));
+    }
+  }  
     
   public void setRightEnabled(boolean bool){
-    this.rightEnabled = bool;
+     if (bool != this.rightEnabled) {
+       this.rightEnabled = bool;
+       this.notifyObservers(new Event(Model.ENABLE_CHANGED,this));
+    }
   }
   
   public void setEnabled(boolean bool){
-    this.leftEnabled = bool;
-    this.rightEnabled = bool;
+    if ((bool != leftEnabled) || (bool != rightEnabled)) {
+      this.leftEnabled = bool;
+      this.rightEnabled = bool;
+      this.notifyObservers(new Event(Model.ENABLE_CHANGED,this));
+    }
   }
 
   public int getNextLevel(){

@@ -336,7 +336,8 @@ void motorCheck(){
     motorStep++;
     digitalWrite(motorUpPin, HIGH);
     delay(MOTOR_STEP_LENGTH);
-    digitalWrite(motorUpPin, LOW);    
+    digitalWrite(motorUpPin, LOW); 
+    Serial.println("Motor goes up");   
   } else if ((motorState[1] ==1) && (motorStep > 0)){
     motorStep--;
     digitalWrite(motorDownPin, HIGH);
@@ -344,7 +345,8 @@ void motorCheck(){
     digitalWrite(motorDownPin, LOW);      
   } 
   if ((motorState[2]==1) && (motorStep == MOTOR_MAX)){
-    servo.writeMicroseconds(1510);    
+    servo.writeMicroseconds(1510);
+    Serial.println("Servo spinning");
   } else {
     servo.writeMicroseconds(SERVO_STOP);
   }
