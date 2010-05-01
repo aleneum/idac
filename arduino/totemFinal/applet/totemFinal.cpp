@@ -9,6 +9,7 @@ void symbolMessage();
 void beatMessage();
 void topMessage();
 void motorCheck();
+void flashMessage();
 Servo servo;
 
 int index=0;
@@ -33,6 +34,8 @@ int motorDownPin = 15;
 
 int servoPin = 16; 
 
+int flashPin = 9;
+
 int serialIndex=0;
 
 const int LIGHT_MODE = 1;
@@ -41,6 +44,7 @@ const int SYMBOL_MODE = 3;
 const int MOTOR_MODE = 4;
 const int ENABLE_MODE = 5;
 const int TOP_MODE = 6;
+const int FLASH_MODE = 7;
 
 const int IDLE_MODE = 0;
 
@@ -50,15 +54,17 @@ const int SYMBOL_LENGTH = 3;
 const int MOTOR_LENGTH = 3;
 const int ENABLE_LENGTH = 2;
 const int TOP_LENGTH = 1;
+const int FLASH_LENGTH = 1;
 
-const int MOTOR_UP_TIMELENGTH = 50;
-const int MOTOR_UP_STEPLENGTH = 10;
+const int MOTOR_UP_TIMELENGTH = 25;
+const int MOTOR_UP_STEPLENGTH = 20;
 
-const int MOTOR_DOWN_TIMELENGTH = 20;
-const int MOTOR_DOWN_STEPLENGTH = 30;
+const int MOTOR_DOWN_TIMELENGTH = 16;
+const int MOTOR_DOWN_STEPLENGTH = 40;
 
 const int MOTOR_MAX = 2000;
 
+const int SERVO_SPIN = 1510;
 const int SERVO_STOP = 1530;
 
 int lightState[LIGHT_LENGTH];
@@ -74,12 +80,14 @@ int motorState[MOTOR_LENGTH];
 int motorTmp[MOTOR_LENGTH];
 int motorStep = 0;
 
-
 int enableState[ENABLE_LENGTH];
 int enableTmp[ENABLE_LENGTH];
 
 int topState[TOP_LENGTH];
 int topTmp[TOP_LENGTH];
+
+int flashState[FLASH_LENGTH];
+int flashTmp[FLASH_LENGTH];
 
 int mode = IDLE_MODE;
 
@@ -178,6 +186,16 @@ void loop() {
         topMessage();
         mode = IDLE_MODE;        
       }
+    } else if (mode == FLASH_MODE) {
+      flashTmp[serialIndex]=in - '0';
+      serialIndex++;
+      if (serialIndex >= FLASH_LENGTH){
+        for (int i=0; i < FLASH_LENGTH; i++) {
+          flashState[i] = flashTmp[i];
+        }
+        flashMessage();
+        mode = IDLE_MODE;        
+      }
     } else {
       switch(in) {
         case 'l':  mode = LIGHT_MODE;
@@ -199,6 +217,9 @@ void loop() {
                    serialIndex = 0;
                    break;
         case 'b':  beatMessage();
+                   break;
+        case 'f':  mode = FLASH_MODE;
+                   serialIndex = 0;
                    break;
         default :  mode = IDLE_MODE;
                    break;
@@ -362,9 +383,17 @@ void motorCheck(){
   }
   
   if ((motorState[2]==1) && (motorStep >= MOTOR_MAX)){
-    servo.writeMicroseconds(1510);
+    servo.writeMicroseconds(SERVO_SPIN);
   } else {
     servo.writeMicroseconds(SERVO_STOP);
+  }
+}
+
+void flashMessage(){
+  if (flashState[0] == 1){
+    digitalWrite(flashPin,HIGH);
+  } else {
+    digitalWrite(flashPin,LOW);
   }
 }
 

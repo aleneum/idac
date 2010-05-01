@@ -16,9 +16,9 @@ boolean servoOn = false;
 
 void setup()
 { 
-  
- myservo.attach(6);
- myservo.writeMicroseconds(1530);
+ digitalWrite(16,LOW);
+ //myservo.attach(6);
+ //myservo.writeMicroseconds(1530);
   
 //pinMode(Button1, INPUT);
 //pinMode(Button2, INPUT);
@@ -36,12 +36,9 @@ void loop()
      if (in == 'n'){
        servoOn = true;
      } else if ( in == 'u') {
-        for (int i=0; i < 50; i++) {
           digitalWrite(motorPin1,HIGH);
           delay(20);
           digitalWrite(motorPin1,LOW);
-          delay(20);
-        }
       } else if ( in == 'd') {
         digitalWrite(motorPin2,HIGH);
         delay(20);
