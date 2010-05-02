@@ -51,14 +51,17 @@ class Controller implements Observer{
     switch(level){
       case 0:   this.show = new LightShowOff();
                   model.setEnabled(false);
-                  this.sms.sendMotorMessage(Model.MOTOR_DOWN);
+                  this.sms.sendVolumeMessage(0);
+                  this.sms.sendSymbolMessage(level);
                   break;
       case 1:   this.show = new LightShowSimpleBar();
                   model.setEnabled(true);
                   this.sms.sendMotorMessage(Model.MOTOR_OFF);
+                  this.sms.sendSymbolMessage(level);
                   break;
       case 2:   this.show = new LightShowColorBar();
                   model.setEnabled(true);
+                  this.sms.sendTopMessage("0");
                   break;
       case 3:   this.show = new LightShowClavilux();
                   this.sms.sendMotorMessage(Model.MOTOR_DOWN);
@@ -77,6 +80,7 @@ class Controller implements Observer{
       case 8:   this.show = new LightShowShutDown();
                   this.sms.sendMotorMessage(Model.MOTOR_DOWN);
                   this.sms.sendFlashMessage("0");
+                  this.sms.sendTopMessage("0");
                   break;
     }
   }

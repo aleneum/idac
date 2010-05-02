@@ -365,7 +365,9 @@ void beatMessage(){
 void topMessage(){
   if (topState[0] == 1){
     digitalWrite(topPin, HIGH);
+    beatState = true;
   } else {
+    beatState = false;
     digitalWrite(topPin, LOW);
   }
 }

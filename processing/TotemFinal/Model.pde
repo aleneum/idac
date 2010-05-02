@@ -268,6 +268,6 @@ public class TotemState{
     
     public int getSonicInput(){
       return this.sonicInput;
-    } 
+    }    
   }
     

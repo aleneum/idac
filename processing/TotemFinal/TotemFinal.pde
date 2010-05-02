@@ -103,6 +103,10 @@ void draw(){
     model.updateLevel(motion.getMotionLeft(), motion.getMotionRight(), input.getNoiseLevel(),sonic);
     controller.step(state);
     lastChecked = millis();
+    
+    if (model.getLevel() == 8){
+      this.motion.resetMotion();
+    }
   }
   delay(10);  
 }

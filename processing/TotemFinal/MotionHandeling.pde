@@ -5,7 +5,7 @@ import codeanticode.gsvideo.*; //LINUX
 public class MotionHandeling {
   public static final float MOTION_LIMIT = 0.4;
   public static final float MOTION_INCREASE = 0.005;
-  public static final float MOTION_DECREASE = 0.0005;
+  public static final float MOTION_DECREASE = 0.001;
   
   PApplet parent;
   
@@ -39,7 +39,7 @@ public class MotionHandeling {
     // TODO use both cameras; for testing purpose I just use one.
     videoLeft = new GSCapture(parent, 320, 240, "/dev/video0"); // LINUX
     //videoRight = videoLeft;
-    videoRight = new GSCapture(parent, 320, 240, "/dev/video1"); // LINUX
+    videoRight = new GSCapture(parent, 320, 240, "/dev/video2"); // LINUX
     
     prevLeft = createImage(videoLeft.width,videoLeft.height,RGB);
     prevRight = createImage(videoRight.width,videoRight.height,RGB);
@@ -88,6 +88,11 @@ public class MotionHandeling {
     } else {
       return motionRight;
     }
+  }
+
+  public void resetMotion() {
+    motionLeft = 0;
+    motionRight = 0;
   }
     
   private int updateMotion(GSCapture video, PImage prevFrame){
