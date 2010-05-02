@@ -4,8 +4,7 @@ class AudioOutputHandeling extends Observable implements Observer{
 
   public static final String BEAT_DETECTED = "btevt";
   public static final String VOLUME_EVENT  = "vlevt";
-  
-  public static final int BEAT_DELAY = 200;  
+  public static final int BEAT_DELAY = 1000;
   
   private float maxVolume;
   private TPlayer player;
@@ -29,7 +28,7 @@ class AudioOutputHandeling extends Observable implements Observer{
     }
     super.setChanged();
     super.notifyObservers(new Event(VOLUME_EVENT, this)); 
-}
+  }
   
   public float getVolume(){
     float outLevel = player.getOutLevel();
@@ -67,32 +66,47 @@ class AudioOutputHandeling extends Observable implements Observer{
     ArrayList fileList = new ArrayList();
     
     upList = new ArrayList(7);
-    
+   
+    // level0 -> level1 
     fileList.add(PlayList.AUDIO_PATH + PlayList.LOOP1);
     upList.add(fileList);
     
+    // level1 -> level2
     fileList = new ArrayList();
     fileList.add(PlayList.AUDIO_PATH + PlayList.BRIDGE1);
     fileList.add(PlayList.AUDIO_PATH + PlayList.LOOP2);
     upList.add(fileList);
     
+    // level2 -> level3
     fileList = new ArrayList();
     fileList.add(PlayList.AUDIO_PATH + PlayList.LOOP3);
     upList.add(fileList);
     
+    // level3 -> level4
     fileList = new ArrayList();
     fileList.add(PlayList.AUDIO_PATH + PlayList.BRIDGE3);
     fileList.add(PlayList.AUDIO_PATH + PlayList.LOOP4);
     upList.add(fileList);
     
+    // level4 -> level4a
+    fileList = new ArrayList();
+    fileList.add(PlayList.AUDIO_PATH + PlayList.BRIDGE4);
+    upList.add(fileList);
+    
+    // level4a -> level5
     fileList = new ArrayList();
     fileList.add(PlayList.AUDIO_PATH + PlayList.LOOP5);
     upList.add(fileList);
     
+    // level5-> level5a
+    fileList = new ArrayList();
+    fileList.add(PlayList.AUDIO_PATH + PlayList.SILENCE);
+    upList.add(fileList);
+    
+    // level5 -> level6 
     fileList = new ArrayList();
     fileList.add(PlayList.AUDIO_PATH + PlayList.FINAL);
     upList.add(fileList);
-    
     
     
     // DOWN LIST
@@ -124,5 +138,4 @@ class AudioOutputHandeling extends Observable implements Observer{
     fileList.add(PlayList.AUDIO_PATH + PlayList.SILENCE);
     downList.add(fileList);
   }
-
 }

@@ -17,14 +17,18 @@ public class MotionHandeling {
   //Capture videoLeft; // MAC + WIN
   //Capture videoRight; // MAC + WIN
 
-  int maxMotionLeft = 1;
-  int maxMotionRight = 1;
   float motionLeft = 0;
   float motionRight = 0;
   float motion = 0;
 
   int instantLeft = 0;
   int instantRight = 0;
+
+  int minMotionRight = 0;
+  int minMotionLeft = 0;
+  
+  int maxMotionRight = 1;
+  int maxMotionLeft = 1;
 
   PImage prevLeft, prevRight;
 
@@ -42,12 +46,23 @@ public class MotionHandeling {
   }
   
   public void update(){
+    int tmpLeft = 0;
+    int tmpRight = 0;
+    for (int i=0; i < 10; i++) {
+      grabMotion();
+      if ( tmpRight < instantRight) tmpRight = instantRight;
+      if ( tmpLeft < instantLeft) tmpLeft = instantLeft;
+    }
+    instantLeft = tmpLeft;
+    instantRight = tmpRight;
+    checkMotion();
+  }
+  
+  public void grabMotion(){
     instantLeft = updateMotion(videoLeft,prevLeft);
     instantRight = updateMotion(videoRight, prevRight);
     if (maxMotionLeft < instantLeft) maxMotionLeft = instantLeft;
     if (maxMotionRight < instantRight) maxMotionRight = instantRight;
-    motionLeft = checkMotion(instantLeft, maxMotionLeft, motionLeft);
-    motionRight = checkMotion(instantRight, maxMotionRight, motionRight);
   }
   
   public float getMotionLeft(){
@@ -59,11 +74,11 @@ public class MotionHandeling {
   }
   
   public float getInstantLeft(){
-    return float(instantLeft)/maxMotionLeft;
+    return map(instantLeft, minMotionLeft, maxMotionLeft, 0, 1);
   }
   
   public float getInstantRight(){
-    return float(instantRight)/maxMotionRight;
+    return map(instantRight,minMotionRight, maxMotionRight,0,1);
   }
  
   // returns the maximum motion 
@@ -89,19 +104,101 @@ public class MotionHandeling {
     return detection.getMotion();
   }
   
-  private float checkMotion(int diff, int maxDiff, float motion){
-    if (diff > MOTION_LIMIT * maxDiff) {
-      motion += MOTION_INCREASE;
-      if (motion > 1) {
-        motion = 1;
+  private void checkMotion(){
+    if (this.getInstantLeft() > MOTION_LIMIT) {
+      motionLeft += MOTION_INCREASE;
+      if (motionLeft > 1){
+        motionLeft = 1;
       }
     } else {
-      motion -= MOTION_DECREASE;
-        if (motion < 0) {
-        motion = 0;
+      motionLeft -= MOTION_DECREASE;
+      if (motionLeft < 0) {
+        motionLeft = 0;
       }
     }
-    return motion;
+    
+    if (this.getInstantRight() > MOTION_LIMIT) {
+      motionRight += MOTION_INCREASE;
+      if (motionRight > 1){
+        motionRight = 1;
+      }
+    } else {
+      motionRight -= MOTION_DECREASE;
+      if (motionRight < 0) {
+        motionRight = 0;
+      }
+    }
+  }
+  
+  public void calibrateLow(){
+    minMotionLeft = 0;
+    minMotionRight = 0; 
+    
+    for (int i = 0; i < 1000; i++){
+      grabMotion();
+      minMotionLeft += instantLeft;
+      minMotionRight += instantRight;
+    }
+    
+    minMotionLeft /= 1000;
+    minMotionRight /= 1000;
+    
+    
+    minMotionLeft = floor(1.2 * minMotionLeft);
+    minMotionRight = floor(1.2 * minMotionRight);
+    
+    
+    println("minMotionLeft: " + minMotionLeft + " minMotionRight: " +  minMotionRight);
+    
+  }
+  
+  public void calibrateHigh(){
+    maxMotionRight = 1;
+    maxMotionLeft = 1;
+    
+    int tmpRight = 0;
+    int tmpLeft = 0;
+    
+    int rightCount = 0;
+    int leftCount = 0;
+    
+    for (int i = 0; i < 1000; i++){
+      grabMotion();
+      if (maxMotionRight < instantRight){
+        maxMotionRight = instantRight; 
+      }
+      if (maxMotionLeft < instantLeft) {
+        maxMotionLeft = instantLeft;
+      }
+    }
+    
+    for (int i = 0; i < 1000; i++){
+      grabMotion();
+      if ((maxMotionRight * 0.4) < instantRight){
+        tmpRight += instantRight;
+        rightCount ++;
+      }
+    
+      if ((maxMotionLeft * 0.4) < instantLeft){
+        tmpLeft += instantLeft;
+        leftCount ++;
+      }
+    }
+    
+    if (rightCount > 0) {
+      maxMotionRight = tmpRight / rightCount;
+    } else {
+      maxMotionRight = 100000;
+    }
+    if (leftCount > 0) {
+      maxMotionLeft = tmpLeft / leftCount;
+    } else {
+      maxMotionLeft = 100000;
+    }
+    
+    
+    println("maxMotionLeft: " + maxMotionLeft + " maxMotionRight: " +  maxMotionRight );
+    
   }
   
 }

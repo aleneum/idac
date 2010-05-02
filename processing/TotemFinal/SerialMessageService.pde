@@ -19,32 +19,26 @@ class SerialMessageService{
   
   public void sendSymbolMessage(int level){
 
-    //DELETE ME
-    if (level >= 4){
-      fill(color(255,255,255));
-      level = 0;
-    } else {
-      fill(color(0,0,0));
-    }
+    //delete me
+    fill(color(0,0,0));
     ellipse(250, 200, 30, 30);
-    if (level == 3){
-      fill(color(255,255,255));
-      level = 0;  
-    } else {
-      fill(color(0,0,0));
-    }
     ellipse(200, 200, 30, 30);
+    ellipse(150, 200, 30, 30);    
     
-    if (level == 2){
-      fill(color(255,255,255));
-      level = 0;  
-    } else {
-      fill(color(0,0,0));
+    fill(color(255,255,255));
+    
+    //DELETE ME
+    if (level == 4){
+      ellipse(250, 200, 30, 30);
+    } else if (level == 3) {
+      ellipse(200, 200, 30, 30);
+    } else if (level == 2) {
+      ellipse(150, 200, 30, 30);    
     }
-    ellipse(150, 200, 30, 30);
     // DELETE ME END
     
     StringBuffer msg = new StringBuffer("s000");
+
     if ((level > 1) && (level < 5)) {
       msg.setCharAt(level-1,'1');
     }
@@ -113,20 +107,21 @@ class SerialMessageService{
     StringBuffer msg = new StringBuffer("v00000");
 
     if (volume > 0) {
-      msg.setCharAt(1,'1');
+      msg.setCharAt(5,'1');
     } 
     if (volume > 0.2) {
-      msg.setCharAt(2,'1');
+      msg.setCharAt(4,'1');
     }
     if (volume > 0.4) {
       msg.setCharAt(3,'1');
     }
     if (volume > 0.6) {
-      msg.setCharAt(4,'1');
+      msg.setCharAt(2,'1');
     }
     if (volume > 0.8) {
-      msg.setCharAt(5,'1');
+      msg.setCharAt(1,'1');
     }   
+    
     sendMessage(msg.toString());
   }
   
@@ -195,10 +190,13 @@ class SerialMessageService{
   public void sendTopMessage(String msg){
     sendMessage("t" + msg);
   }
+
+  public void sendFlashMessage(String msg){
+    sendMessage("f" + msg);
+  }
   
   private void sendMessage(String msg){
     communicator.serialSend(msg);
-    //println(minute() + ":" + second() + "->" + msg);
   }
   
 }

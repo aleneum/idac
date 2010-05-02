@@ -3,7 +3,7 @@ import ddf.minim.*;
 
 class AudioInputHandeling{
 
-  public static final float NOISE_LIMIT = 0.5;
+  public static final float NOISE_LIMIT = 0.6;
   public static final float NOISE_INCREASE = 0.005;
   public static final float NOISE_DECREASE = 0.001;
   

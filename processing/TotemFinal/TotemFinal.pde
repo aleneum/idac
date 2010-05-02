@@ -5,6 +5,9 @@ import fullscreen.*;
 import totem.comm.*;
 import totem.sound.*;
 
+public static final int UPDATE_MILLIS = 100;
+int lastChecked = 0;
+
 // gui elements
 ControlP5 p5;
 
@@ -12,6 +15,9 @@ ControlP5 p5;
 MotionHandeling motion;
 public final String MOTION_LEFT = "Motion Left";
 public final String MOTION_RIGHT = "Motion Right";
+
+public final String INSTANT_LEFT = "Instant Left";
+public final String INSTANT_RIGHT = "Instant Right"; 
 
 // mic values
 AudioInputHandeling input;
@@ -43,7 +49,10 @@ void setup(){
     p5.addNumberbox(SOUND_IN     , 0, 10,  70, 50, 14).setId(3);
     p5.addNumberbox(SONIC_IN     , 0, 10, 100, 50, 14).setId(4);
     
-    p5.addNumberbox(LEVEL        , 0, 70,  10, 50, 15).setId(5);
+    
+    p5.addNumberbox(INSTANT_LEFT   , 0, 70,  10, 50, 14).setId(5);
+    p5.addNumberbox(INSTANT_RIGHT  , 0, 70,  40, 50, 14).setId(6);
+    p5.addNumberbox(LEVEL          , 0, 70,  70, 50, 15).setId(7);
     
     //setup motion
     motion = new MotionHandeling(this);
@@ -66,34 +75,54 @@ void setup(){
     model.addObserver(controller);
     model.addObserver(output);
     player.addAudioObserver(controller);
+    noLoop();
 }
 
 void draw(){
   p5.controller(MOTION_LEFT).setValue(motion.getMotionLeft());
   p5.controller(MOTION_RIGHT).setValue(motion.getMotionRight());
+  p5.controller(INSTANT_LEFT).setValue(motion.getInstantLeft());
+  p5.controller(INSTANT_RIGHT).setValue(motion.getInstantRight());
+
   p5.controller(SOUND_IN).setValue(input.getNoiseLevel());
   p5.controller(SONIC_IN).setValue(sonic);
   p5.controller(LEVEL).setValue(model.getLevel());
   
   input.update();
-  output.refresh();
   motion.update();
   
   // TODO adapt this system
-  model.updateLevel(motion.getMotionLeft(),input.getNoiseLevel(),sonic);
   
   // TODO figure out a way to include beat;
  
   state.update(motion.getMotionLeft(), motion.getMotionRight(), motion.getInstantLeft(), motion.getInstantRight(), 
                model.getLevel(), false, input.getNoiseLevel(), input.getInputLevel(), output.getVolume(), sonic);
-               
-  controller.step(state);
-  delay(5);  
+  
+  if (millis() > lastChecked + UPDATE_MILLIS) {
+    output.refresh();
+    model.updateLevel(motion.getMotionLeft(), motion.getMotionRight(), input.getNoiseLevel(),sonic);
+    controller.step(state);
+    lastChecked = millis();
+  }
+  delay(10);  
 }
 
 // This is called by the serial object that was created by TSerialCommunicator
 // We just forward it to the communica tor and gather it's output
 void serialEvent (Serial serial){
-  communicator.serialEvent(serial);
-  sonic = int(communicator.getActivity());
+  //communicator.serialEvent(serial);
+  String inString = serial.readStringUntil('\n');
+  println(inString);
+  //sonic = int(communicator.getActivity());
+}
+
+void keyPressed() {
+  if (key == 'l') {
+    this.motion.calibrateLow();
+  } else if (key == 'h') {
+    this.motion.calibrateHigh();
+  } else if (key == 's') {
+    println("start loop");
+    loop();
+  }
 }

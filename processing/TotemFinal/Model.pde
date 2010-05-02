@@ -3,13 +3,15 @@ class Model extends Observable{
   public static final String MOTOR_OFF  = "000";
   public static final String MOTOR_UP   = "100";
   public static final String MOTOR_DOWN = "010";
-  public static final String MOTOR_SPIN = "001";
+  public static final String MOTOR_SPIN = "101";
   
   public static final String ENABLE_OFF   = "00";
   public static final String ENABLE_LEFT  = "10";
   public static final String ENABLE_RIGHT = "01";
   public static final String ENABLE_BOTH  = "11";
   
+  
+  public static final float LEVEL01_LIMIT = 0.05;
   public static final float LEVEL02_LIMIT = 0.2;
   public static final float LEVEL03_LIMIT = 0.35;
   public static final float LEVEL04_LIMIT = 0.5;
@@ -37,11 +39,23 @@ class Model extends Observable{
     lockExceed = 0;
   }
   
-  public void updateLevel(float motion, float sound, int sonic) {
-    sound = 0.5;
+  public void updateLevel(float motionLeft, float motionRight, float sound, int sonic) {
+    float motion;
+    boolean bothEnabled;
+    
+    if (motionLeft > motionRight) {
+      motion = motionLeft;
+      bothEnabled = (motionRight > LEVEL03_LIMIT);
+    } else {
+      motion = motionRight;
+      bothEnabled = (motionLeft > LEVEL03_LIMIT);
+    }
+    
+    
+    
     if (!levelLock) {
       nextLevel = level;
-      if ((motion < LEVEL02_LIMIT) && (sonic > 100)){
+      if (motion < LEVEL01_LIMIT){
         if (level > 0) {
           nextLevel = level-1;
         } 
@@ -57,52 +71,51 @@ class Model extends Observable{
         } else if(level > 2) {
           nextLevel = level-1;
         }
-      } else if (motion < LEVEL04_LIMIT) {
-        if (level < 3) {
-          nextLevel = level+1;
-        } else if(level > 3) {
-          nextLevel = level-1;
-        } 
-      } else if (motion < LEVEL05_LIMIT) {
-        if (level < 4) {
-          nextLevel = level+1;
-        } else if(level > 4) {
-          nextLevel = level-1;
-        }
-      } else  if ((motion >= LEVEL05_LIMIT) && (LEVEL05_SOUND >= 0.5)) {
-        if (level < 5) {
-          nextLevel = level+1;
-        }
-      } else {
-        if (level < 4) {
-          nextLevel = level+1;
-        } else if(level > 4) {
-          nextLevel = level-1;
-        }
+     } else if (motion < LEVEL04_LIMIT ) {
+            if (level < 3) {
+              nextLevel = level+1;
+            } else if(level > 3) {
+            nextLevel = level-1;
+        }       
+     } else if (bothEnabled) {
+         if (motion < LEVEL05_LIMIT) {
+            if (level < 4) {
+              nextLevel = level+1;
+            } else if(level > 4) {
+              nextLevel = level-1;
+            }
+          } else if ((motion >= LEVEL05_LIMIT) && (LEVEL05_SOUND >= 0.5)) {
+            if (level < 5) {
+              nextLevel = level+1;
+            }
+          }
       }
-    
+      
       if ((level != nextLevel) && (level < 5)){
         levelLock = true;
         super.setChanged();
         super.notifyObservers(new Event(LEVEL_NEXT,this));
-      } else if (level == 5) {
-        nextLevel = 6;
+      } else if ((level == 5)||(level == 6)||(level==7)) {
+        nextLevel = level + 1;
         levelLock = true;
         super.setChanged();
         super.notifyObservers(new Event(LEVEL_NEXT,this));
-      } else if (level == 6){
+      } 
+        else if (level == 8){
         nextLevel = 0;
         levelLock = true;
         super.setChanged();
         super.notifyObservers(new Event(LEVEL_NEXT,this));
       }
     }
+    
     if (lockExceed > 0){
       if (lockExceed < millis()) {
         lockExceed = 0;
         levelLock = false;
       }
     }
+    
   }
   
   public int getLevel(){
@@ -140,14 +153,16 @@ class Model extends Observable{
   public void setLeftEnabled(boolean bool){
     if (bool != this.leftEnabled) {
       this.leftEnabled = bool;
-      this.notifyObservers(new Event(Model.ENABLE_CHANGED,this));
+      super.setChanged();
+      super.notifyObservers(new Event(Model.ENABLE_CHANGED,this));
     }
   }  
     
   public void setRightEnabled(boolean bool){
      if (bool != this.rightEnabled) {
        this.rightEnabled = bool;
-       this.notifyObservers(new Event(Model.ENABLE_CHANGED,this));
+       super.setChanged();
+       super.notifyObservers(new Event(Model.ENABLE_CHANGED,this));
     }
   }
   
@@ -155,7 +170,8 @@ class Model extends Observable{
     if ((bool != leftEnabled) || (bool != rightEnabled)) {
       this.leftEnabled = bool;
       this.rightEnabled = bool;
-      this.notifyObservers(new Event(Model.ENABLE_CHANGED,this));
+      super.setChanged();
+      super.notifyObservers(new Event(Model.ENABLE_CHANGED,this));
     }
   }
 
@@ -200,6 +216,22 @@ public class TotemState{
       this.soundInput = iSound;
       this.soundOutput = oSound;
       this.sonicInput = sonic;
+    }
+    
+    public float getHigherMotion(){
+      if (this.motionLeft > this.motionRight){
+        return this.motionLeft;
+      } else {
+        return this.motionRight;
+      }
+    }
+    
+    public float getLowerMotion(){
+      if (this.motionLeft > this.motionRight){
+        return this.motionRight;
+      } else {
+        return this.motionLeft;
+      }
     }
     
     public float getMotionLeft(){

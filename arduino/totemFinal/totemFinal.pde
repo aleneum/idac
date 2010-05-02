@@ -21,12 +21,17 @@ int dataPin = 11;
 int motorEnable = 13;
 int motorUpPin = 14;
 int motorDownPin = 15;
+float lidLed = 0;
 
 int servoPin = 16; 
 
+int sonicPin = 17;
+
 int flashPin = 9;
 
-int serialIndex=0;
+int serialIndex = 0;
+
+boolean beatState = false;
 
 const int LIGHT_MODE = 1;
 const int VOLUME_MODE = 2;
@@ -46,13 +51,12 @@ const int ENABLE_LENGTH = 2;
 const int TOP_LENGTH = 1;
 const int FLASH_LENGTH = 1;
 
-const int MOTOR_UP_TIMELENGTH = 25;
-const int MOTOR_UP_STEPLENGTH = 20;
+const int MOTOR_UP_TIMELENGTH = 30;
+const int MOTOR_DOWN_TIMELENGTH = 20;
+const float MOTOR_LIGHT_STEP = 0.5;
 
-const int MOTOR_DOWN_TIMELENGTH = 16;
-const int MOTOR_DOWN_STEPLENGTH = 40;
-
-const int MOTOR_MAX = 2000;
+const float SONIC_MIN = 3.5;
+const float SONIC_MAX = 23;
 
 const int SERVO_SPIN = 1510;
 const int SERVO_STOP = 1530;
@@ -68,7 +72,7 @@ int symbolTmp[SYMBOL_LENGTH];
 
 int motorState[MOTOR_LENGTH];
 int motorTmp[MOTOR_LENGTH];
-int motorStep = 0;
+float distance = 0;
 
 int enableState[ENABLE_LENGTH];
 int enableTmp[ENABLE_LENGTH];
@@ -80,6 +84,7 @@ int flashState[FLASH_LENGTH];
 int flashTmp[FLASH_LENGTH];
 
 int mode = IDLE_MODE;
+
 
 int count = 0;
 
@@ -102,8 +107,12 @@ void setup() {
   shiftOut(dataPin, clockPin, 0); 
   shiftOut(dataPin, clockPin, 0);
   digitalWrite(latchPin, HIGH);
-}
+  
+  for (int i=0; i<3; i++){
+    motorState[i] = 0;
+  }
 
+}
 void loop() {
   //count up routine
  if (Serial.available()>0) {
@@ -271,18 +280,21 @@ int updateShift(){
   int resultLowest=0;
   
   int serialIn[32];
-  
-  for (int i=0; i < 6; i++) {
-    serialIn[i] = lightState[i];
+ 
+  if ((motorState[0] + motorState[1]) >= 1) {
+    motorLights();
   }
+    for (int i=0; i < 6; i++) {
+      serialIn[i] = lightState[i];
+    }
   
-  for (int i=8; i < 17; i++){
-    serialIn[i] = lightState[i-2];
-  }
+    for (int i=8; i < 17; i++){
+      serialIn[i] = lightState[i-2];
+    }
   
-  for (int i=17; i < 22; i++) {
-    serialIn[i] = volumeState[i - 17];
-  }
+    for (int i=17; i < 22; i++) {
+      serialIn[i] = volumeState[i-17];
+    }
   
   serialIn[25] = enableState[0];
   serialIn[26] = enableState[1];
@@ -341,7 +353,13 @@ void symbolMessage(){
 }
 
 void beatMessage(){
-  // DO NOTHING
+  if(!beatState){
+    beatState = true;
+    digitalWrite(topPin, HIGH);
+  } else {
+    beatState = false;
+    digitalWrite(topPin, LOW);
+  }
 }
 
 void topMessage(){
@@ -353,23 +371,29 @@ void topMessage(){
 }
 
 void motorCheck(){
-  if ((motorState[0] == 1) && (motorStep < MOTOR_MAX)){
-    motorStep += MOTOR_UP_STEPLENGTH;
-    digitalWrite(motorUpPin, HIGH);
-    delay(MOTOR_UP_TIMELENGTH);
-    digitalWrite(motorUpPin, LOW);
-    delay(50);
-  } else if ((motorState[1] ==1) && (motorStep > 0)){
-    motorStep -= MOTOR_DOWN_STEPLENGTH ;
-    digitalWrite(motorDownPin, HIGH);
-    delay(MOTOR_DOWN_TIMELENGTH);
-    digitalWrite(motorDownPin, LOW);
-    delay(50);
-  } else if (motorStep < 0){
-      motorStep = 0;
-  }
+  if (motorState[0] == 1) {
+    updateShift();
+    distance = ping();
+    if (distance <= SONIC_MAX) {
+      digitalWrite(motorUpPin, HIGH);
+      delay(MOTOR_UP_TIMELENGTH);
+      digitalWrite(motorUpPin, LOW);
+    } else {
+      motorState[0] = 0;
+    }
+  } else if (motorState[1] ==1){
+    updateShift();
+    distance = ping();
+    if (distance > SONIC_MIN){
+      digitalWrite(motorDownPin, HIGH);
+      delay(MOTOR_DOWN_TIMELENGTH);
+      digitalWrite(motorDownPin, LOW);
+    } else {
+      motorState[1] = 0;
+    }
+  }   
   
-  if ((motorState[2]==1) && (motorStep >= MOTOR_MAX)){
+  if ((motorState[2]==1) && (distance >= SONIC_MAX)){
     servo.writeMicroseconds(SERVO_SPIN);
   } else {
     servo.writeMicroseconds(SERVO_STOP);
@@ -384,3 +408,40 @@ void flashMessage(){
   }
 }
 
+float ping(){
+  float ultrasoundValue = 0;
+  int echo = 0;
+   pinMode(sonicPin, OUTPUT); // Switch signalpin to output
+   digitalWrite(sonicPin, LOW); // Send low pulse
+   delayMicroseconds(2); // Wait for 2 microseconds
+   digitalWrite(sonicPin, HIGH); // Send high pulse
+   delayMicroseconds(5); // Wait for 5 microseconds
+   digitalWrite(sonicPin, LOW); // Holdoff
+   pinMode(sonicPin, INPUT); // Switch signalpin to input
+   digitalWrite(sonicPin, HIGH); // Turn on pullup resistor
+   echo = pulseIn(sonicPin, HIGH); //Listen for echo
+   ultrasoundValue = (echo / 58.138); //convert to CM
+   return ultrasoundValue;
+}
+
+void motorLights(){
+  for (int i = 0; i < 15; i++) {
+    lightState[i] = 0;
+  }
+  int led = floor(lidLed);
+  if (motorState[0] == 1){
+    lightState[(led*3) + 1] = 1; 
+    lidLed += MOTOR_LIGHT_STEP;
+  } else {
+    lightState[(led*3)] = 1; 
+    lidLed -= MOTOR_LIGHT_STEP;
+  }
+  
+  if (lidLed < 0) {
+    lidLed = 4.99;
+  } else if (lidLed >= 5){
+    lidLed = 0;
+  }
+  
+  delay(50);
+}

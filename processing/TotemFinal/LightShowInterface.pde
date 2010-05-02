@@ -81,7 +81,7 @@ public class LightShowColorBar implements LightShowInterface {
     colors = new ArrayList(3);
     colors.add(LightState.RED);
     colors.add(LightState.GREEN);
-    colors.add(LightState.BLUE);
+    colors.add(LightState.YELLOW);
     currentColor = LightState.RED;
   }
   
