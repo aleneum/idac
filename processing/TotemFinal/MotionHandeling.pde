@@ -7,6 +7,9 @@ public class MotionHandeling {
   public static final float MOTION_INCREASE = 0.005;
   public static final float MOTION_DECREASE = 0.0001; 
   
+  public static final int MOTION_FRAMES = 3;
+  public static final int MOTION_CALIB_STEPS = 100;
+  
   PApplet parent;
   
   TMotionDetection detection;
@@ -42,8 +45,10 @@ public class MotionHandeling {
     detection = new TMotionDetection();
     
     // TODO use both cameras; for testing purpose I just use one.
+    //videoLeft = new Capture(parent, 320, 240); // Windows
+    //videoRight = new Capture(parent, 320, 240); // Windows
+    
     videoLeft = new GSCapture(parent, 320, 240, "/dev/video0"); // LINUX
-    //videoRight = videoLeft;
     videoRight = new GSCapture(parent, 320, 240, "/dev/video2"); // LINUX
     
     prevLeft = createImage(videoLeft.width,videoLeft.height,RGB);
@@ -166,14 +171,14 @@ public class MotionHandeling {
     minMotionLeft = 0;
     minMotionRight = 0; 
     
-    for (int i = 0; i < 1000; i++){
+    for (int i = 0; i < MOTION_CALIB_STEPS; i++){
       grabMotion();
       minMotionLeft += instantLeft;
       minMotionRight += instantRight;
     }
     
-    minMotionLeft /= 1000;
-    minMotionRight /= 1000;
+    minMotionLeft /= MOTION_CALIB_STEPS;
+    minMotionRight /= MOTION_CALIB_STEPS;
     
     
     minMotionLeft = floor(1.2 * minMotionLeft);
@@ -195,7 +200,7 @@ public class MotionHandeling {
     int rightCount = 0;
     int leftCount = 0;
     
-    for (int i = 0; i < 1000; i++){
+    for (int i = 0; i < MOTION_CALIB_STEPS; i++){
       grabMotion();
       if (maxMotionRight < instantRight){
         maxMotionRight = instantRight; 
@@ -205,7 +210,7 @@ public class MotionHandeling {
       }
     }
     
-    for (int i = 0; i < 1000; i++){
+    for (int i = 0; i < MOTION_CALIB_STEPS; i++){
       grabMotion();
       if ((maxMotionRight * 0.4) < instantRight){
         tmpRight += instantRight;
