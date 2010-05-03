@@ -87,10 +87,13 @@ void draw(){
   p5.controller(SOUND_IN).setValue(input.getNoiseLevel());
   p5.controller(SONIC_IN).setValue(sonic);
   p5.controller(LEVEL).setValue(model.getLevel());
+ 
+ if (model.getLevel() < 5) {
   
   input.update();
-  motion.update();
+  motion.update(model.getLevel());
   
+ }
   // TODO adapt this system
   
   // TODO figure out a way to include beat;
@@ -126,6 +129,7 @@ void keyPressed() {
   } else if (key == 'h') {
     this.motion.calibrateHigh();
   } else if (key == 's') {
+    controller.init();
     println("start loop");
     loop();
   }

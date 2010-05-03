@@ -20,6 +20,10 @@ class Controller implements Observer{
     blink = 0;
     this.show = new LightShowOff();
     this.sms = new SerialMessageService(communicator);
+    model.setEnabled(false);
+  }
+  
+  public void init() {
     levelChanged(0);
   }
 
@@ -50,7 +54,7 @@ class Controller implements Observer{
   public void levelChanged(int level){
     switch(level){
       case 0:   this.show = new LightShowOff();
-                  model.setEnabled(false);
+                  model.setEnabled(true);
                   this.sms.sendVolumeMessage(0);
                   this.sms.sendSymbolMessage(level);
                   break;
@@ -65,12 +69,14 @@ class Controller implements Observer{
                   break;
       case 3:   this.show = new LightShowClavilux();
                   this.sms.sendMotorMessage(Model.MOTOR_DOWN);
+                  this.sms.sendFlashMessage("0");
                   break;
       case 4:   this.show = new LightShowPulse();
                   this.sms.sendFlashMessage("1");
                   break;
       case 5:   this.show = new LightShowRainbow();
                   this.sms.sendMotorMessage(Model.MOTOR_UP);
+                  this.sms.sendSymbolMessage(level);
                   break;
       case 6:   this.show = new LightShowRainbow();
                   this.sms.sendMotorMessage(Model.MOTOR_SPIN);

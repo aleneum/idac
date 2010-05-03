@@ -3,9 +3,9 @@ import codeanticode.gsvideo.*; //LINUX
 //import processing.video.*; // MAC + WIN
 
 public class MotionHandeling {
-  public static final float MOTION_LIMIT = 0.4;
+  public static final float MOTION_LIMIT = 0.5;
   public static final float MOTION_INCREASE = 0.005;
-  public static final float MOTION_DECREASE = 0.001;
+  public static final float MOTION_DECREASE = 0.0001; 
   
   PApplet parent;
   
@@ -24,13 +24,18 @@ public class MotionHandeling {
   int instantLeft = 0;
   int instantRight = 0;
 
-  int minMotionRight = 0;
-  int minMotionLeft = 0;
+  int minMotionRight = 700;
+  int minMotionLeft = 500;
   
-  int maxMotionRight = 1;
-  int maxMotionLeft = 1;
+  int maxMotionRight =1700;
+  int maxMotionLeft = 2200;
+  
+  float decreaseLeft = 0;
+  float decreaseRight = 0;
 
   PImage prevLeft, prevRight;
+
+  float[] limits;
 
   public MotionHandeling(PApplet aParent){
     this.parent = aParent;
@@ -43,9 +48,21 @@ public class MotionHandeling {
     
     prevLeft = createImage(videoLeft.width,videoLeft.height,RGB);
     prevRight = createImage(videoRight.width,videoRight.height,RGB);
+    
+    limits = new float[9];
+    
+    limits[0] = Model.LEVEL01_LIMIT + 0.05;
+    limits[1] = Model.LEVEL02_LIMIT + 0.05;
+    limits[2] = Model.LEVEL03_LIMIT + 0.05;
+    limits[3] = Model.LEVEL04_LIMIT + 0.05;
+    limits[4] = 1;
+    limits[5] = 1;
+    limits[6] = 1;
+    limits[7] = 1;
+    limits[8] = 1;
   }
   
-  public void update(){
+  public void update(int level){
     int tmpLeft = 0;
     int tmpRight = 0;
     for (int i=0; i < 10; i++) {
@@ -55,14 +72,12 @@ public class MotionHandeling {
     }
     instantLeft = tmpLeft;
     instantRight = tmpRight;
-    checkMotion();
+    checkMotion(level);
   }
   
   public void grabMotion(){
     instantLeft = updateMotion(videoLeft,prevLeft);
     instantRight = updateMotion(videoRight, prevRight);
-    if (maxMotionLeft < instantLeft) maxMotionLeft = instantLeft;
-    if (maxMotionRight < instantRight) maxMotionRight = instantRight;
   }
   
   public float getMotionLeft(){
@@ -74,11 +89,17 @@ public class MotionHandeling {
   }
   
   public float getInstantLeft(){
-    return map(instantLeft, minMotionLeft, maxMotionLeft, 0, 1);
+    float back = map(instantLeft, minMotionLeft, maxMotionLeft, 0, 1);
+    if (back < 0) back = 0;
+    if (back > 1) back = 1;
+    return back;
   }
   
   public float getInstantRight(){
-    return map(instantRight,minMotionRight, maxMotionRight,0,1);
+    float back = map(instantRight,minMotionRight, maxMotionRight,0,1);
+    if (back < 0) back = 0;
+    if (back > 1) back = 1; 
+    return back;
   }
  
   // returns the maximum motion 
@@ -109,14 +130,17 @@ public class MotionHandeling {
     return detection.getMotion();
   }
   
-  private void checkMotion(){
+  private void checkMotion(int level){
     if (this.getInstantLeft() > MOTION_LIMIT) {
       motionLeft += MOTION_INCREASE;
-      if (motionLeft > 1){
-        motionLeft = 1;
+      decreaseLeft = 0;
+      
+      if (motionLeft > limits[level]){
+        motionLeft = limits[level];
       }
     } else {
-      motionLeft -= MOTION_DECREASE;
+      decreaseLeft += MOTION_DECREASE;
+      motionLeft -= decreaseLeft;
       if (motionLeft < 0) {
         motionLeft = 0;
       }
@@ -124,11 +148,13 @@ public class MotionHandeling {
     
     if (this.getInstantRight() > MOTION_LIMIT) {
       motionRight += MOTION_INCREASE;
-      if (motionRight > 1){
-        motionRight = 1;
+      decreaseRight = 0;
+      if (motionRight > limits[level]){
+        motionRight = limits[level];
       }
     } else {
-      motionRight -= MOTION_DECREASE;
+      decreaseRight += MOTION_DECREASE;
+      motionRight -= decreaseRight;
       if (motionRight < 0) {
         motionRight = 0;
       }
@@ -136,6 +162,7 @@ public class MotionHandeling {
   }
   
   public void calibrateLow(){
+    println("Calibrate lowest input threshold...");
     minMotionLeft = 0;
     minMotionRight = 0; 
     
@@ -153,11 +180,12 @@ public class MotionHandeling {
     minMotionRight = floor(1.2 * minMotionRight);
     
     
-    println("minMotionLeft: " + minMotionLeft + " minMotionRight: " +  minMotionRight);
+    println("Calibration done: minMotionLeft: " + minMotionLeft + " minMotionRight: " +  minMotionRight);
     
   }
   
   public void calibrateHigh(){
+    println("Calibrate highest input threshold...");
     maxMotionRight = 1;
     maxMotionLeft = 1;
     
@@ -202,7 +230,7 @@ public class MotionHandeling {
     }
     
     
-    println("maxMotionLeft: " + maxMotionLeft + " maxMotionRight: " +  maxMotionRight );
+    println("Calibration done: maxMotionLeft: " + maxMotionLeft + " maxMotionRight: " +  maxMotionRight );
     
   }
   

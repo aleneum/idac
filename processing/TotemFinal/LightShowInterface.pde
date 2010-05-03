@@ -20,10 +20,33 @@ public class LightShowOff implements LightShowInterface{
   }
   
   public LightState getNextState(TotemState state){
+   off = new LightStateOff();   
+    float motion = 0;
+    if (state.getInstantLeft() > state.getInstantRight()){
+      motion = state.getInstantLeft(); 
+    } else {
+      motion = state.getInstantRight();
+    }
+   
+   if (motion > 0.1){
+      off.setFirst(LightState.MAGENTA);
+    } 
+    if (motion > 0.2){
+      off.setSecond(LightState.MAGENTA);
+    }
+    if (motion > 0.4){
+      off.setThird(LightState.MAGENTA);
+    }
+    if (motion > 0.6){
+      off.setFourth(LightState.MAGENTA);
+    }
+    if (motion > 0.8){
+      off.setFifth(LightState.MAGENTA);
+    }
     return off;
   }
   
-  public void beatDetected() {};
+  public void beatDetected() {}
   
   public void reset() {}
   
@@ -52,19 +75,19 @@ public class LightShowSimpleBar implements LightShowInterface {
     }
     
     if (motion > 0.1){
-      simple.setFirst(LightState.WHITE);
+      simple.setFirst(LightState.MAGENTA);
     } 
     if (motion > 0.2){
-      simple.setSecond(LightState.WHITE);
+      simple.setSecond(LightState.MAGENTA);
     }
     if (motion > 0.4){
-      simple.setThird(LightState.WHITE);
+      simple.setThird(LightState.MAGENTA);
     }
     if (motion > 0.6){
-      simple.setFourth(LightState.WHITE);
+      simple.setFourth(LightState.MAGENTA);
     }
     if (motion > 0.8){
-      simple.setFifth(LightState.WHITE);
+      simple.setFifth(LightState.MAGENTA);
     }
     return simple;
   }
