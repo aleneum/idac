@@ -111,7 +111,7 @@ void draw(){
       this.motion.resetMotion();
     }
   }
-  delay(50);  
+  delay(10);  
 }
 
 // This is called by the serial object that was created by TSerialCommunicator

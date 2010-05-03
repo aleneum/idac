@@ -1,25 +1,24 @@
 import totem.img.*;
-//import codeanticode.gsvideo.*; //LINUX
-import processing.video.*; // MAC + WIN
+import codeanticode.gsvideo.*; //LINUX
+//import processing.video.*; // MAC + WIN
 
 public class MotionHandeling {
   public static final float MOTION_LIMIT = 0.5;
   public static final float MOTION_INCREASE = 0.005;
   public static final float MOTION_DECREASE = 0.0001; 
   
-  public static final int MOTION_FRAMES = 1;
-  public static final int MOTION_CALIB_STEPS = 20;
-  public static final int MOTION_CALIB_DELAY = 10;
+  public static final int MOTION_FRAMES = 3;
+  public static final int MOTION_CALIB_STEPS = 100;
   
   PApplet parent;
   
   TMotionDetection detection;
 
-  //GSCapture videoLeft; // LINUX
-  //GSCapture videoRight; // LINUX
+  GSCapture videoLeft; // LINUX
+  GSCapture videoRight; // LINUX
 
-  Capture videoLeft; // MAC + WIN
-  Capture videoRight; // MAC + WIN
+  //Capture videoLeft; // MAC + WIN
+  //Capture videoRight; // MAC + WIN
 
   float motionLeft = 0;
   float motionRight = 0;
@@ -28,11 +27,11 @@ public class MotionHandeling {
   int instantLeft = 0;
   int instantRight = 0;
 
-  int minMotionRight = 2772;
-  int minMotionLeft = 2122;
+  int minMotionRight = 700;
+  int minMotionLeft = 500;
   
-  int maxMotionRight =11313;
-  int maxMotionLeft = 12035;
+  int maxMotionRight =1700;
+  int maxMotionLeft = 2200;
   
   float decreaseLeft = 0;
   float decreaseRight = 0;
@@ -46,13 +45,11 @@ public class MotionHandeling {
     detection = new TMotionDetection();
     
     // TODO use both cameras; for testing purpose I just use one.
-    Capture.list();
-    videoRight = new Capture(parent, 320, 240); // Windows
-    videoLeft = new Capture(parent, 320, 240); // Windows
-
+    //videoLeft = new Capture(parent, 320, 240); // Windows
+    //videoRight = new Capture(parent, 320, 240); // Windows
     
-    //videoLeft = new GSCapture(parent, 320, 240, "/dev/video0"); // LINUX
-    //videoRight = new GSCapture(parent, 320, 240, "/dev/video2"); // LINUX
+    videoLeft = new GSCapture(parent, 320, 240, "/dev/video0"); // LINUX
+    videoRight = new GSCapture(parent, 320, 240, "/dev/video2"); // LINUX
     
     prevLeft = createImage(videoLeft.width,videoLeft.height,RGB);
     prevRight = createImage(videoRight.width,videoRight.height,RGB);
@@ -73,7 +70,7 @@ public class MotionHandeling {
   public void update(int level){
     int tmpLeft = 0;
     int tmpRight = 0;
-    for (int i=0; i < MOTION_FRAMES; i++) {
+    for (int i=0; i < 10; i++) {
       grabMotion();
       if ( tmpRight < instantRight) tmpRight = instantRight;
       if ( tmpLeft < instantLeft) tmpLeft = instantLeft;
@@ -124,7 +121,7 @@ public class MotionHandeling {
     motionRight = 0;
   }
     
-  private int updateMotion(Capture video, PImage prevFrame){
+  private int updateMotion(GSCapture video, PImage prevFrame){
     if (video.available()) {
       // Save previous frame for motion detection!!
       prevFrame.copy(video,0,0,video.width,video.height,0,0,video.width,video.height); // Before we read the new frame, we always save the previous frame for comparison!
@@ -178,7 +175,6 @@ public class MotionHandeling {
       grabMotion();
       minMotionLeft += instantLeft;
       minMotionRight += instantRight;
-      delay(MOTION_CALIB_DELAY);
     }
     
     minMotionLeft /= MOTION_CALIB_STEPS;
@@ -212,7 +208,6 @@ public class MotionHandeling {
       if (maxMotionLeft < instantLeft) {
         maxMotionLeft = instantLeft;
       }
-      delay(MOTION_CALIB_DELAY);
     }
     
     for (int i = 0; i < MOTION_CALIB_STEPS; i++){
@@ -226,7 +221,6 @@ public class MotionHandeling {
         tmpLeft += instantLeft;
         leftCount ++;
       }
-     delay(MOTION_CALIB_DELAY);
     }
     
     if (rightCount > 0) {

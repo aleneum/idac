@@ -84,7 +84,7 @@ class Model extends Observable{
             } else if(level > 4) {
               nextLevel = level-1;
             }
-          } else if ((motion >= LEVEL05_LIMIT) && (sound >= LEVEL05_SOUND)) {
+          } else if ((motion >= LEVEL05_LIMIT) && (LEVEL05_SOUND >= 0.5)) {
             if (level < 5) {
               nextLevel = level+1;
             }
