@@ -1,5 +1,5 @@
 public class PlayList {
-	public static final String AUDIO_PATH = "../idac/processing/data/";
+	public static final String AUDIO_PATH = "C:/CODE/idac/processing/data/";
 	
         public static final String SILENCE = "silence.wav";
 	public static final String LOOP1 = "loop01.wav";
