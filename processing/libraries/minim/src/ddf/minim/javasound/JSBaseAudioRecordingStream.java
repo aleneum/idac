@@ -94,7 +94,7 @@ AudioRecordingStream
 	JSBaseAudioRecordingStream(JSMinim sys, AudioInputStream stream, SourceDataLine sdl,
 		int bufferSize, int msLen) {
 		this.playList = new Vector<byte[]>();
-		currentRaw = this.loadSample("silence.wav");
+		currentRaw = this.loadSample("../idac/processing/data/silence.wav");
 
 		format = sdl.getFormat();
 		this.bufferSize = bufferSize;
